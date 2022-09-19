@@ -55,8 +55,4 @@ window.addEventListener("DOMContentLoaded", function () {
 			}
 		});
 	});
-	
-	function loginoutProcess() {
-		alert("TEST");
-	}	
 });

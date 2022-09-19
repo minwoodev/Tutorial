@@ -28,5 +28,16 @@
         <beans:property name="defaultEncoding" value="UTF-8" />
         <beans:property name="cacheSeconds" value="60"/>
     </beans:bean>	
-    
+	
+	<!-- interceptor 설정 -->
+	<interceptors>
+		<interceptor>
+			<mapping path="/board/*"/>
+			<exclude-mapping path="/board/mainPage"/>
+			<exclude-mapping path="/board/readContentPage"/>
+			
+			<beans:bean id="authenticationInterceptor" class="com.spring.novice.interceptor.AuthenticationInterceptor"></beans:bean>
+		</interceptor>
+	</interceptors>
+	
 </beans:beans>
