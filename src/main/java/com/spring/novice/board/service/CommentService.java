@@ -19,13 +19,16 @@ public class CommentService {
 
 	@Autowired
 	UserSQLMapper userSQLMapper;
-	
+
 	@Autowired
 	BoardSQLMapper boardSQLMapper;
-	
+
 	@Autowired
 	CommentSQLMapper commentSQLMapper;
-	
+
+	public void insertComment(CommentVo param) {
+		commentSQLMapper.insertComment(param);
+	}
 
 	public ArrayList<HashMap<String, Object>> getCommentList() {
 
