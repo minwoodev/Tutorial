@@ -39,4 +39,8 @@
 		SELECT * FROM novice_user WHERE user_id = #{user_id} AND user_pw = #{user_pw}
 	</select>
 	
+	<select id="getUserByNo" resultType="com.spring.novice.vo.UserVo">
+		SELECT * FROM novice_user WHERE user_no = #{no}
+	</select>
+	
 </mapper>

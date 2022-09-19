@@ -22,4 +22,6 @@ public interface UserSQLMapper {
 	/* 로그인 쿼리*/
 	public UserVo getUserByIdAndPw(UserVo param);
 	
+	public UserVo getUserByNo(int no);
+	
 }
