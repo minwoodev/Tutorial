@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.spring.novice.board.service.BoardService;
+import com.spring.novice.board.service.CommentService;
 import com.spring.novice.vo.BoardVo;
 import com.spring.novice.vo.ReadPageVo;
 import com.spring.novice.vo.UserVo;
@@ -28,6 +29,9 @@ public class BoardController {
 
 	@Autowired
 	BoardService boardService;
+	
+	@Autowired
+	CommentService commentService;
 
 	@RequestMapping("mainPage")
 	public String mainPage(Model model) {
@@ -99,8 +103,10 @@ public class BoardController {
 		}
 
 		HashMap<String, Object> map = boardService.getBoard(no);
+		ArrayList<HashMap<String, Object>> dataList = commentService.getCommentList();
 		
 		model.addAttribute("data", map);
+		model.addAttribute("dataList", dataList);
 
 		return "board/readContentPage";
 	}

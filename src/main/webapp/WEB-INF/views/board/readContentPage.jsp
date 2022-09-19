@@ -85,9 +85,48 @@
 		                </table>					
 					</div>				
 				</div>
+				
+				<div class="row mt-3">
+						<table class="table" style="border-top:1px solid steelblue; border-bottom:2px solid steelblue">
+						<thead>
+							<tr>
+								<th scope="col">댓글번호</th>
+								<th scope="col">댓글내용</th>
+								<th scope="col">댓글작성자</th>
+								<th scope="col">작성일</th>
+								<th scope="col">삭제</th>							
+							</tr>
+						</thead>
+						
+						<tbody>
+							<c:forEach items="${dataList }" var="date">
+								<tr>
+									<th class="text-center">${date.commentVo.comment_no }</th>
+									<th class="text-center">${date.commentVo.comment_content }</th>
+									<th class="text-center">${date.userVo.user_nickname }</th>
+									<th class="text-center"><fmt:formatDate value="${date.commentVo.comment_write_date }" pattern="yyyy년MM월dd일 HH시 mm분 ss초" /></th>
+									<c:if test="${sessionUser.user_no == date.commentVo.user_no }">
+										<th><a href="./deleteCommentContentProcess?comment_no=${date.commentVo.comment_no }
+																	&board_no=${date.commentVo.board_no} " type="button" class="btn btn-outline-primary">댓글삭제
+																</a>
+											<a href="javascript:void(window.open('http://localhost:8181/board/updateCommentContentPage?comment_no=${date.commentVo.comment_no }', 
+											'댓글수정페이지','location=no, directories=no, resizable=no, status=no, toolbar=no, menubar=no, width=1024, height=1024'))" 
+											type="button" class="btn btn-outline-primary">댓글수정</a>
+										</th>
+									</c:if>
+								</tr>
+							</c:forEach>
+						</tbody>	
+					</table>
+				</div>
+                
                 
 				<div class="d-grid gap-2 d-md-flex justify-content-md-end">
                     <a href="./mainPage" class="btn btn-outline-primary" type="button">목록으로</a>
+                    <a href="javascript:void(window.open('http://localhost:8181/board/wirteCommentContentPage?board_no=${data.boardVo.board_no }', 
+                    	'댓글작성페이지','location=no, directories=no, resizable=no, status=no, toolbar=no, menubar=no, width=1024, height=1024'))" 
+                    	type="button" class="btn btn-outline-primary">댓글작성
+                    </a>
 					<c:if test="${sessionUser.user_no == data.boardVo.user_no}">
                     	<a href="./deleteContentProcess?board_no=${data.boardVo.board_no }" class="btn btn-outline-primary" type="button">글삭제</a>
                     	<a href="./updateContentPage?board_no=${data.boardVo.board_no }" class="btn btn-outline-primary" type="button">글수정</a>	                    	
