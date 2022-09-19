@@ -44,5 +44,17 @@ public class BoardService {
 	public void insertBoard(BoardVo param) {
 		boardSQLMapper.insertBoard(param);
 	}
+	
+	public HashMap<String, Object> getBoard(int board_no) {
 
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		BoardVo boardVo = boardSQLMapper.getBoardByNo(board_no);
+		UserVo userVo = userSQLMapper.getUserByNo(boardVo.getUser_no());
+		
+		map.put("userVo", userVo);
+		map.put("boardVo", boardVo);
+		
+		return map;
+	}
 }

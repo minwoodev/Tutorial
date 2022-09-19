@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.spring.novice.board.service.BoardService;
 import com.spring.novice.vo.BoardVo;
@@ -54,6 +55,17 @@ public class BoardController {
 
 		return "redirect:./mainPage";
 
+	}
+	
+	@RequestMapping("readContentPage")
+	public String readContentPage(@RequestParam(value="board_no", defaultValue="0") int no, Model model) {
+		
+		HashMap<String, Object> data = boardService.getBoard(no);
+		
+		model.addAttribute("data", data);
+		
+		return "board/readContentPage";
+		
 	}
 
 }

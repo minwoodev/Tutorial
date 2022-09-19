@@ -79,19 +79,19 @@
 									
 									<c:if test="${data.boardVo.board_secret == 'N' }">
 										<c:if test="${!empty data.newKeyword }">
-											<td class="text-center"><a href="./readContentPage?board_no=${data.boardVo.board_no }">${data.boardVo.board_title }<span class="badge bg-danger">new</span></a></td>
+											<td class="text-center"><a href="../board/readContentPage?board_no=${data.boardVo.board_no }">${data.boardVo.board_title }<span class="badge bg-danger">new</span></a></td>
 										</c:if>
 										<c:if test="${empty data.newKeyword }">
-											<td class="text-center"><a href="./readContentPage?board_no=${data.boardVo.board_no }">${data.boardVo.board_title }</a></td>
+											<td class="text-center"><a href="../board/readContentPage?board_no=${data.boardVo.board_no }">${data.boardVo.board_title }</a></td>
 										</c:if>
 									</c:if>
 									
 									<c:if test="${sessionUser.user_no == data.userVo.user_no && data.boardVo.board_secret == 'Y' }">
 										<c:if test="${!empty data.newKeyword }">
-											<td class="text-center"><a href="./readContentPage?board_no=${data.boardVo.board_no }">${data.boardVo.board_title }<span class="badge bg-danger">new</span></a></td>
+											<td class="text-center"><a href="../board/readContentPage?board_no=${data.boardVo.board_no }">${data.boardVo.board_title }<span class="badge bg-danger">new</span></a></td>
 										</c:if>
 										<c:if test="${empty data.newKeyword }">
-											<td class="text-center"><a href="./readContentPage?board_no=${data.boardVo.board_no }">${data.boardVo.board_title }</a></td>
+											<td class="text-center"><a href="../board/readContentPage?board_no=${data.boardVo.board_no }">${data.boardVo.board_title }</a></td>
 										</c:if>
 									</c:if>
 									

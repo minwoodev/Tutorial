@@ -20,4 +20,8 @@
 		)
 	</insert>
 	
+	<select id="getBoardByNo" resultType="com.spring.novice.vo.BoardVo">
+		SELECT * FROM novice_board WHERE board_no = #{board_no}
+	</select>
+	
 </mapper>
