@@ -1,8 +1,10 @@
 package com.spring.novice.board.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.spring.novice.board.service.BoardService;
 import com.spring.novice.vo.BoardVo;
+import com.spring.novice.vo.ReadPageVo;
 import com.spring.novice.vo.UserVo;
 
 @Controller
@@ -58,14 +61,48 @@ public class BoardController {
 	}
 	
 	@RequestMapping("readContentPage")
-	public String readContentPage(@RequestParam(value="board_no", defaultValue="0") int no, Model model) {
+	public String readContentPage(@RequestParam(value="board_no", defaultValue="0") int no, Model model, HttpServletRequest request) {
+		ArrayList<ReadPageVo> readPageVo = boardService.getReadPageList(no);
+
+		if (boardService.isSelectReadBoardNo(no)) {
+			if (!boardService.isSelectReadClientIp(request.getRemoteAddr())) {
+				ReadPageVo param = new ReadPageVo();
+				param.setBoard_no(no);
+				param.setClient_ip(request.getRemoteAddr());
+
+				boardService.insertReadPage(param);
+				boardService.increaseReadCount(no);
+			}
+		} else {
+			ReadPageVo param = new ReadPageVo();
+			param.setBoard_no(no);
+			param.setClient_ip(request.getRemoteAddr());
+
+			boardService.insertReadPage(param);
+			boardService.increaseReadCount(no);
+		}
+
+		for (ReadPageVo param : readPageVo) {
+			if (param != null) {
+				if (boardService.isSelectReadClientIp(request.getRemoteAddr())) {
+					if (param.getClient_ip().equals(request.getRemoteAddr())) {
+						Date writeDate = new Date(System.currentTimeMillis());
+						Date tagetDate = new Date(param.getRead_write_date().getTime() + 1000 * 60 * 60 * 24);
+
+						if (writeDate.after(tagetDate)) {
+							boardService.increaseReadCount(no);
+							boardService.updateReadPage(param);
+						}
+					}
+				}
+			}
+		}
+
+		HashMap<String, Object> map = boardService.getBoard(no);
 		
-		HashMap<String, Object> data = boardService.getBoard(no);
-		
-		model.addAttribute("data", data);
-		
+		model.addAttribute("data", map);
+
 		return "board/readContentPage";
-		
 	}
 
 	@RequestMapping("updateContentPage")

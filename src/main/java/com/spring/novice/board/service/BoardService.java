@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.spring.novice.board.mapper.BoardSQLMapper;
 import com.spring.novice.user.mapper.UserSQLMapper;
 import com.spring.novice.vo.BoardVo;
+import com.spring.novice.vo.ReadPageVo;
 import com.spring.novice.vo.UserVo;
 
 @Service
@@ -66,4 +67,31 @@ public class BoardService {
 		boardSQLMapper.deleteContentPage(board_no);
 	}
 	
+	public void insertReadPage(ReadPageVo param) {
+		boardSQLMapper.insertReadPage(param);
+	}
+
+	public ArrayList<ReadPageVo> getReadPageList(int board_no) {
+		return boardSQLMapper.getReadPageList(board_no);
+	}
+
+	public boolean isSelectReadClientIp(String client_ip) {
+		return boardSQLMapper.selectByClientIp(client_ip) > 0;
+	}
+
+	public boolean isSelectReadBoardNo(int board_no) {
+		return boardSQLMapper.selectByReadByBoardNo(board_no) > 0;
+	}
+
+	public boolean selectByReadPage(ReadPageVo param) {
+		return boardSQLMapper.selectByReadPage(param) > 0;
+	}
+
+	public void increaseReadCount(int board_no) {
+		boardSQLMapper.increaseReadCount(board_no);
+	}
+
+	public void updateReadPage(ReadPageVo param) {
+		boardSQLMapper.updateReadPage(param);
+	}
 }
