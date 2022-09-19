@@ -31,4 +31,8 @@ public class UserService {
 	public boolean isSelctByEmail(String user_email) {
 		return userSQLMapper.selectByEmail(user_email) > 0;
 	}
+	
+	public UserVo selectByIdAndPw(UserVo param) {
+		return userSQLMapper.getUserByIdAndPw(param);
+	}
 }

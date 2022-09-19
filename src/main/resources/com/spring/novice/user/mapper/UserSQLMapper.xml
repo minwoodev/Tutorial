@@ -35,4 +35,8 @@
 		SELECT count(*) FROM novice_user WHERE user_email = #{user_email}
 	</select>
 	
+	<select id="getUserByIdAndPw" resultType="com.spring.novice.vo.UserVo">
+		SELECT * FROM novice_user WHERE user_id = #{user_id} AND user_pw = #{user_pw}
+	</select>
+	
 </mapper>

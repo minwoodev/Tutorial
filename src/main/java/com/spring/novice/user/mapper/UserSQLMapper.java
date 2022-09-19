@@ -18,4 +18,8 @@ public interface UserSQLMapper {
 
 	/* 이메일 중복확인 쿼리 */
 	public int selectByEmail(String user_email);
+	
+	/* 로그인 쿼리*/
+	public UserVo getUserByIdAndPw(UserVo param);
+	
 }

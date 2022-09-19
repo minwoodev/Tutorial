@@ -2,6 +2,8 @@ package com.spring.novice.user.controller;
 
 import java.util.HashMap;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -116,6 +118,38 @@ public class UserController {
 		}
 
 		return data;
+	}
+	
+	@RequestMapping("loginPage")
+	public String loginPage() {
+		return "user/loginPage";
+	}
+
+	@ResponseBody
+	@RequestMapping("userLoginParocess")
+	public HashMap<String, Object> userLoginParocess(UserVo param, HttpSession session) {
+
+		HashMap<String, Object> data = new HashMap<String, Object>();
+
+		UserVo sessionUser = userService.selectByIdAndPw(param);
+
+		if (sessionUser != null) {
+			session.setAttribute("sessionUser", sessionUser);
+			data.put("result", "success");
+		} else {
+			data.put("result", "fail");
+		}
+
+		return data;
+	}
+
+	@RequestMapping("logoutUserPorcess")
+	public String logoutUserPorcess(HttpServletRequest request) {
+
+		request.getSession().invalidate();
+		request.getSession(true);
+
+		return "redirect:../board/mainPage";
 	}
 	
 }
