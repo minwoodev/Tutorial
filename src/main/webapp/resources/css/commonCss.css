@@ -1,0 +1,207 @@
+@charset "utf-8";
+
+/* common config */
+* { margin: 0; padding: 0; font-family: 'Nanum Gothic', sans-serif; font-size: 1em;}
+a { text-decoration : none; color: inherit; }
+a:hover {color: #111;}
+ul, ol, li { list-style: none;}
+table { 
+    /* border-top: 0.15em solid #11468F;
+    border-bottom: 0.15em solid #11468F; */
+    border-collapse: collapse; 
+    border-spacing: 0; 
+    width: 100%;
+    margin-bottom: 1rem;
+    color: #353535;
+    vertical-align: top;
+    border-color: #11468F;
+    font-size: 1em;
+}
+
+form table { width: 100%; }
+
+table thead { 
+    /* border-top: 0.05em solid #11468F;  */
+    border-bottom: 0.05em solid #11468F; 
+    /* background: linear-gradient(to right, #5B7DB1, #fff);  */
+    background: #d5deeb;
+}
+table thead tr th { padding: 0.2em 0.5em; height: 2.5em; font-weight: 800; color: #11468F; text-align: center;}
+table tbody tr { border-bottom: 0.01em dotted #5B7DB1; } 
+table tbody tr th { padding: 0.2em 0.5em; height: 2.5em; text-align: center;}
+table tbody tr td { padding: 0.2em 0.5em; height: 2.5em; /* border-left: 0.01em dotted #5B7DB1 */}
+
+th {
+    display: table-cell;
+    vertical-align: inherit;
+    font-weight: bold;
+    text-align: -internal-center;
+}
+pre{
+    padding:10px;
+    overflow: auto;
+    white-space: pre-wrap; 
+    font-size: 1em;
+    font-family: 'Nanum Gothic', sans-serif;
+}  
+
+/* pallette */
+/* 클래스 자체를 사용하기 보다는, 색상 적용 필요시 이 코드를 사용합니다. */
+.deepindigo { color : #041562 } 
+.deepblue { color : #041562 }
+.black { color : #353535; }
+.gray { color : #dddddd; }
+.white { color : #EEEEEE }
+.orange { color : #985832; }
+.beige { color : #e0e094; }
+.green { color : #265c3e;}
+
+.deepfont { color : #1A132F; }
+
+/* main color */
+.jeanblue1 { color : #11468F; } 
+.jeanblue2 { color : #5B7DB1; }
+.jeanblue3 { color : #b9c9e0; }
+.jeanblue4 { color : #d5deeb; }
+.shadow { color : #788A9E }
+
+/* etcColor */
+.brightblue { color : #61A4BC }
+.pinkpoint { color : #F7E2E2 }
+.formBorder { color: #ced4da }
+
+/* 댓글 총 갯수 */
+.red {
+	color :#ff0000;
+	font-weight: 800;
+	font-size: 0.9em;
+}
+
+/* 컨텐츠 구역 */
+.conBorder {
+    box-sizing: border-box;
+    border: 0.12em solid #ddd;
+    margin: 0.3em 0.1em;
+}
+
+.conTitleArea { border-bottom: 2px solid #eee; margin-bottom: 1em; box-shadow: 0 2px 0 0px #ced4da;} 
+.conTitleArea .conTItle {
+    text-align: left;
+    padding-top: 0.3em;
+    padding-bottom: 0.3em; 
+    margin-bottom: 0.3em;
+    font-weight: 800;
+    font-size: 1.5em;
+    color : #985832;
+}
+
+/* 버튼 class. 글씨 크기, 패딩 등은 각 클래스에 알아서 지정*/
+.btnBasic {
+    border-radius:0.3em;
+    font-weight: bold; 
+    background: #11468F;
+    border: 2px solid #041562;
+    color: #b675ff;
+    cursor: pointer;
+    text-align: center;
+}
+.btnBasic:hover { background: #041562; transition: 0.5; color: #EEEEEE; }
+
+.btnGray {
+    border-radius:0.3em;
+    font-weight: bold; 
+    background: #788A9E;
+    border: 1px solid #353535;
+    color: #EEEEEE;
+    cursor: pointer;
+    text-align: center;
+}
+.btnGray:hover { background: #353535; transition: 0.5; color: #EEEEEE;}
+.btnMin { width: 20%;display: inline-block; }
+
+.btnDirection { color: #11468F; font-weight: bold; font-size: 1.5em; border: 1px solid #11468F; padding: 0.1em 0.7em; }
+.btnDirection:hover { background: #11468F; border: 1px solid #041562; color: #eee; }
+
+.btnDisabled { background: #5e6e83; color: #ccc; }
+.btnDisabled:hover { background: #5e6e83; color: #ccc; cursor: not-allowed; }
+/* document content css */
+
+.formTable { margin: 0.5em 1.5em; }
+
+.searchTable { margin: 0.5em 1.5em; border-top: 0.15em solid #eee; border-bottom: 0.15em solid #eee; }
+.searchTable table { border: none; }
+
+.formTitleArea { padding: 0.4em 0; box-sizing: border-box; border-bottom: 0.15em solid #11468F; margin-bottom: 0.5em; }
+.formTitleArea .formTitle { font-size: 1.2em; font-weight: 600; height: inherit;} 
+.formTitle span { 
+    width: 100%;
+    padding: 0.3em 1.2em 0.5em 0.4em; 
+    border-radius: 5px 20px 0 0;
+    box-sizing: border-box;
+    border-top: 0.15em solid #11468F;
+    border-right: 0.15em solid #11468F;
+    border-left: 0.15em solid #11468F;
+    border-bottom: 0.19em solid white;
+    /* background: #5B7DB1; */
+    color : #11468F; 
+}
+
+.nonActiveTab {
+	border-radius: 5px;
+    background: #eee;
+    color: #c0c0c0;
+    border: none;
+    background: magenta;
+}
+
+.divBorder { border-bottom: 1px dotted #5B7DB1; padding: 0.25em 0; }
+.divdeepBorder { border-bottom: 1px solid #5B7DB1; padding: 0.25em 0; }
+
+.inputTitle { width: 0%; height: 2.5em; font-size: 1em; text-align: center; font-weight: 700; color: #11468F; padding: 0.5em 0.9em 0.7em 1em; float: left;}
+.inputSec { width: 83%; padding: 0.2em 0.5em; float: left; border-left: 1px dotted #5B7DB1; }
+.inputSubmit { width:100%; font-size:1em; padding: 0.3em 0.5em; }
+.formEndBorder { border-bottom: 2px solid #11468F; padding: 0.5em 0;}
+
+.boardSearchBar { background: #5B7DB1; border-radius: 10px; padding: 0.5em 0; }
+
+.pageList { text-align: center;}
+.pageList li { display: inline-block; font-size: 1.3em; color: #353535; cursor: pointer; margin: 0 0.7em;}
+.pageList li.pageNow { font-weight: bold; color: #11468F; background: #5B7DB1; border-radius: 10px; padding: 0 0.5em; }
+
+/* 파일첨부 css */
+.addBtn { font-size:1em; } 
+
+/* 게시판 내용 css*/
+
+.detailSec {padding: 0.3em 0.8em; }
+.detTitle { font-weight: 800; font-size: 1em; }
+.replyWriter { background: #d5deeb; font-weight: 800; text-align: center;}
+.replyDate { text-align: right;}
+.dashedRightBorder { border-right:0.01em dashed #5B7DB1 }
+.replyBtns { padding: 1em 1.3em; background: #d5deeb }
+.replyBtn { display: inline-block; width: 2.5em; }
+.replyDate { font-weight: 800; }
+.gotoList { width:100%; font-size:1em; padding: 0.3em 0.5em; }
+
+.savedMsg { display: none; }
+.pdfImg {height: 32px;}
+
+/* Modal Design*/
+.modal {}
+.modal .modal-dialog { margin-top: 20em; box-shadow: 0 0 5px 0 #555; }
+.modal .modal-dialog .modal-content {}
+.modal .modal-dialog .modal-content .modal-header { border: none; }
+.modal .modal-dialog .modal-content .modal-body { padding: 1em 2em; }
+.modal .modal-dialog .modal-content .modal-footer { border: none; }
+
+.modal.wideModal {}
+.modal.wideModal .modal-dialog { max-width: 1000px; margin-top: 5em; }
+.modal.wideModal .modal-dialog .modal-content {}
+.modal.wideModal .modal-dialog .modal-content .modal-header {}
+.modal.wideModal .modal-dialog .modal-content .modal-body {}
+.modal.wideModal .modal-dialog .modal-content .modal-footer {}
+
+#error_message{
+	color : red;
+}
+/**/

@@ -1,0 +1,155 @@
+@charset "utf-8";
+
+
+/* header */
+
+.header {
+    width: 100%; height: 100%;
+    position : relative;
+    background : transparent;
+    color : #353535;
+    border-bottom: 1px solid #ddd;
+    box-sizing : border-box;
+    z-index : 1000;
+    padding: 2em 2em 0 2em;
+    box-shadow: 0 0 5px 0 #ccc;
+}
+
+.header section { width : 100%; margin: 0 auto; }
+
+.header_logo {width: 18%;}
+.header_logo a img { margin-left: 3.5em; }
+
+.header_menu li {
+    width: 200px;
+    font-size: 24px;
+    font-weight: 800;
+    text-align: center;
+    white-space: nowrap;
+    color: #353535;
+    border-bottom: 5px solid transparent;
+    margin-right: 0.3em;
+    padding: 1.5em 0.5em 0.5em 0.5em;
+    transition: all 0.3s;
+}
+
+.header_menu li:hover {
+    box-sizing : border-box;
+    border-bottom: 3px solid #041562;
+    color: #041562;
+    transition: 0.5s;
+    cursor: pointer;
+}
+
+/*detail menu */
+.header_sub {
+    width: 100%; height: 0px;
+    position: absolute; 
+    overflow: hidden;
+    display: none;
+    /* display: table; */
+    box-sizing : border-box;
+    z-index : 1000;
+    padding: 2em 2em 0 2em;
+    transition: all 0.5s;
+    border-bottom: 1px solid #788A9E;
+}
+
+.header_sub section {
+    width: 100%;
+    margin: 0 auto;
+    display: table-row;
+}
+
+.header_sub_menu ul li{
+    width: 205px;
+    font-size: 16px;
+    text-align: center;
+    white-space: nowrap;
+    border-bottom: 5px solid transparent;
+    transition: all 0.3s;
+}
+
+.header_sub_menu li ul { padding: 0; }
+
+.header_sub_menu li ul li {
+    padding: 0.4em 0;
+    box-sizing : border-box;
+}
+
+.header_sub_menu li ul li:hover {
+    box-sizing : border-box;
+    background: #efefef;
+    transition: 0.9;
+}
+
+/* section Common css*/
+
+.secBorder {
+    box-sizing: border-box;
+    border-radius: 5px;
+    box-shadow: 0 0 5px 0 #ccc;
+}
+.secTitle { 
+    text-align: left; 
+    padding-top: 0.7em; 
+    padding-bottom: 0.3em; 
+    font-weight: 800; 
+    color: #985832; 
+    font-size: 1.3em; }
+
+/* loginBox */
+
+.loginBox { text-align: center; }
+.loginBox form {}
+.loginBox .loginForm { position:relative; padding:20 }
+.loginBox .loginForm div { padding-bottom: 15px; }
+.loginBox .loginForm .frm_input { width:100%; margin:8px 0 }
+.loginBox .loginForm div .chk_box {position:relative; width: 50%; float: left; padding-top: 15px; padding-right: 8px;}
+.loginBox .loginForm div .chk_box input[type="checkbox"] + label {padding-left:5px;color:#676e70}
+.loginBox .loginForm div .chk_box input[type="checkbox"] + label:hover{color:#041562}
+.loginBox .loginForm div .chk_box input[type="checkbox"]:checked + label {color:#222}
+.loginBox .loginForm div .login_btn_box { position: relative; width: 50%; float: left; }
+.loginBox .loginForm div .login_btn_box .btn_submit { 
+    width:100%; 
+    height:35px; 
+    margin:10px 0 0;
+    font-size:1.083em;
+}
+
+.loginBox .loginForm .login_etcBox { position: relative; width: 100%; float: left; border-top: 0.13em solid #ddd; padding-top: 0.5em;}
+.loginBox .loginForm .login_etcBox a { color: #555; padding-right: 1em; padding-left: 1em;}
+.loginBox .loginForm .login_etcBox a:hover { color: #11468F; }
+.loginBox .loginForm .login_etcBox a:first-child { border-right: 1px solid #ccc; }
+.loginBox .loginForm .login_etcBox .btn_submit { 
+    width:100%; 
+    height:35px; 
+    margin:10px 0 0;
+    font-size:1.083em;
+}
+/* left siteIntroBox */
+.siteIntroBox ul { }
+.siteIntroBox ul li { list-style-type: disc; padding: 0.35em; border-bottom: 1px solid #eee;}
+
+/* right ListSection */
+.rightListSection {}
+.rightListSection ul li { list-style-type: disc; padding: 0.35em; border-bottom: 1px solid #eee; }
+
+
+
+/* footer */
+
+.footer { width: 100%; height: 100%; background : transparent; color : #353535; box-sizing : border-box; padding: 2em 2em 0 2em; }
+.footer section { width : 100%; margin: 0 auto; padding: 1em 5em;}
+.gooter .footer_logo {width: 10%; }
+.footer .footer_logo a img { margin-left: 2.5em; width: 150px;}
+.footer section article { float: left; }
+.footer section article:first-child { width: 20%; }
+.footer section article:nth-child(2) { width: 50%;}
+.footer section article:nth-child(3) { text-align: right;}
+
+.footer section article.footer_info { padding: 0 2em; }
+.footer section article.footer_info ul {}
+.footer section article.footer_info ul li { display: inline-block; }
+.footer section article.footer_info ul li:first-child { background: #eeeeee; font-weight: bold; padding: 0 0.5em; }
+.footer section article.footer_info ul li a:hover{ text-decoration: underline; cursor: pointer}

@@ -1,0 +1,45 @@
+@charset "utf-8";
+
+/* main body */
+.middleBtnSection {}
+.middleBtnSection a { width: 25%; text-align: center; padding: 1em 0.8em; padding-bottom: 1em;}
+.middleBtnSection a .iconSpace { box-sizing: border-box; border: 0.05em solid #5B7DB1; background: #e6f0ff; border-radius: 10px; width: 225px; height: 100px; margin: 0 auto; float: left;}
+.middleBtnSection a .iconSpace img { width: 45%; height: 80%; margin-top: 0.5em; display: inline-block}
+.middleBtnSection a .iconSpace h3 { width: 50%; font-size: 1.3em; color: #11468F; font-weight: bold; }
+.middleBtnSection a:first-child .iconSpace h3 { padding-top: 1.55em; }
+.middleBtnSection a:nth-child(2) .iconSpace h3 { padding-top: 1.55em; }
+.middleBtnSection a:nth-child(3) .iconSpace h3 { padding-top: 1em; }
+.middleBtnSection a:nth-child(4) .iconSpace h3 { padding-top: 1em; }
+
+
+.middleTabSection { }
+.middleTabSection .tabBtnSec { padding-bottom: 5px; border-bottom: 2px solid #11468F;}
+.middleTabSection .tabBtnSec .tabBtn { padding: 6px 8px; font-size:1.083em; border-radius: 5px; background: #eee; color: #c0c0c0; }
+.middleTabSection .tabBtnSec .tabBtn.active_now { 
+    border-top: 2px solid #11468F;
+    border-right: 2px solid #11468F;
+    border-left: 2px solid #11468F;
+    border-bottom: 6px solid #fff;
+    font-weight: bold;
+    color: #11468F;
+    background: #fff;
+    
+}
+.middleTabSection .tabBtnSec .more_info { float: right; border-radius: 5px; background: #e6f0ff; color: #11468F; font-weight: bold; font-size: 0.8em; margin-top: 0.2em; padding: 0.2em; }
+
+.middleTabSection .mainSc_tab { display: none; padding: 10px 4px; }
+.middleTabSection .mainSc_tab.active_now { display: block; }
+.middleTabSection .mainSc_tab table { border: none; }
+.middleTabSection .mainSc_tab ul { }
+.middleTabSection .mainSc_tab ul li { list-style-type: circle; font-size: 1em; padding: 0.35em; border-bottom: 1px solid #eee;}
+.middleTabSection .mainSc_tab ul li a {}
+.middleTabSection .mainSc_tab ul li span { float: right; }
+.middleTabSection .mainSc_tab table tr td { font-size: 1em; padding: 0.3em; }
+.middleTabSection .mainSc_tab table tr td.inputEra { width: 70%;}
+.middleTabSection .mainSc_tab table tr td.inputEra input { width: 100%;}
+.middleTabSection .mainSc_tab table tr td .searchBtn {
+    width:100%; 
+    font-size:1em;
+    padding: 0.3em 0.5em;
+}
+
