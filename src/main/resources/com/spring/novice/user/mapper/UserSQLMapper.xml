@@ -19,4 +19,20 @@
 		)
 	</insert>
 	
+	<select id="selectById" resultType="int">
+		SELECT count(*) FROM novice_user WHERE user_id = #{user_id}
+	</select>
+	
+	<select id="selectByNickName" resultType="int">
+		SELECT count(*) FROM novice_user WHERE user_nickname = #{user_nickname}		
+	</select>
+	
+	<select id="selectByPhoneNumber" resultType="int">
+		SELECT count(*) FROM novice_user WHERE user_phone = #{user_phone}
+	</select>
+	
+	<select id="selectByEmail" resultType="int">
+		SELECT count(*) FROM novice_user WHERE user_email = #{user_email}
+	</select>
+	
 </mapper>

@@ -15,5 +15,20 @@ public class UserService {
 	public void insertUser(UserVo param) {
 		userSQLMapper.insertUser(param);
 	}
+	
+	public boolean isSelectById(String user_id) {
+		return userSQLMapper.selectById(user_id) > 0;
+	}
 
+	public boolean isSelectByNickName(String user_nickname) {
+		return userSQLMapper.selectByNickName(user_nickname) > 0;
+	}
+
+	public boolean isSelectByPhone(String user_phone) {
+		return userSQLMapper.selectByPhoneNumber(user_phone) > 0;
+	}
+
+	public boolean isSelctByEmail(String user_email) {
+		return userSQLMapper.selectByEmail(user_email) > 0;
+	}
 }
