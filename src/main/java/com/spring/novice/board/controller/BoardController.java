@@ -68,4 +68,35 @@ public class BoardController {
 		
 	}
 
+	@RequestMapping("updateContentPage")
+	public String updateContentPage(int board_no, Model model) {
+		
+		HashMap<String, Object> data = boardService.getBoard(board_no);
+		
+		model.addAttribute("data", data);
+		
+		return "board/updateContentPage";
+		
+	}	
+	
+	@RequestMapping("updateContentProcess")
+	public String updateContentProcess(@Valid BoardVo param, BindingResult result) {
+		
+		if (result.hasErrors()) {
+			return "board/udpateContentPage";
+		}
+		
+		boardService.updateBoard(param);
+		
+		return "redirect:./readContentPage?board_no="+param.getBoard_no();
+	}
+	
+	@RequestMapping("deleteContentProcess")
+	public String deleteContentProcess(int board_no) {
+		
+		boardService.deleteContentPage(board_no);
+		
+		return "redirect:./mainPage";
+		
+	}
 }

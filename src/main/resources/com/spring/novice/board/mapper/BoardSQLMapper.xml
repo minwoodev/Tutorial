@@ -24,4 +24,12 @@
 		SELECT * FROM novice_board WHERE board_no = #{board_no}
 	</select>
 	
+	<update id="updateBoard">
+		UPDATE novice_board SET board_title = #{board_title}, board_content = #{board_content} WHERE board_no = #{board_no}
+	</update>
+	
+	<delete id="deleteContentPage">
+		DELETE FROM novice_board WHERE board_no = #{board_no} 
+	</delete>
+	
 </mapper>

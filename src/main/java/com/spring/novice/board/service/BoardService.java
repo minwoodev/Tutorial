@@ -57,4 +57,13 @@ public class BoardService {
 		
 		return map;
 	}
+	
+	public void updateBoard(BoardVo param) {
+		boardSQLMapper.updateBoard(param);
+	}
+	
+	public void deleteContentPage(int board_no) {
+		boardSQLMapper.deleteContentPage(board_no);
+	}
+	
 }
