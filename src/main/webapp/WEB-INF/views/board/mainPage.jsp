@@ -119,7 +119,7 @@
 				<div class="row-3">
 						<div align="right">
 							<div class="col-2 d-grid">
-								<a href="./writeContentPage" class="btn btn-outline-primary">글쓰기</a>
+								<a href="../board/writeContentPage" class="btn btn-outline-primary">글쓰기</a>
 							</div>
 						</div>
 				</div>

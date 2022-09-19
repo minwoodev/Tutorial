@@ -41,4 +41,8 @@ public class BoardService {
 		return dataList;
 	}
 
+	public void insertBoard(BoardVo param) {
+		boardSQLMapper.insertBoard(param);
+	}
+
 }

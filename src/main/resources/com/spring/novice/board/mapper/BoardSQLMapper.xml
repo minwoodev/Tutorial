@@ -8,4 +8,16 @@
 		SELECT * FROM novice_board ORDER BY board_no DESC
 	</select>
 	
+	<insert id="insertBoard">
+		INSERT INTO novice_board VALUES (
+			novice_board_seq.nextval,
+			#{user_no},
+			#{board_title},
+			#{board_content},
+			#{board_secret},
+			#{board_readcount},
+			SYSDATE		
+		)
+	</insert>
+	
 </mapper>
