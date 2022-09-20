@@ -3,6 +3,7 @@ package com.spring.novice.board.mapper;
 import java.util.ArrayList;
 
 import com.spring.novice.vo.BoardVo;
+import com.spring.novice.vo.FileVo;
 import com.spring.novice.vo.ReadPageVo;
 
 public interface BoardSQLMapper {
@@ -41,5 +42,11 @@ public interface BoardSQLMapper {
 	public void increaseReadCount(int board_no);
 	
 	public void updateReadPage(ReadPageVo param);
+	
+	/* 게시글 번호 증가 */
+	public int createBoardPk();
+	
+	/* 첨부파일 */
+	public void insertFile(FileVo param);
 	
 }

@@ -89,7 +89,7 @@
 
 				<!-- 페이지별 내용 시작-->
 				<form:form action="./writeContentProcess" modelAttribute="boardVo"
-					id="writeContentForm">
+					id="writeContentForm" enctype="multipart/form-data">
 					<div class="row mt-2">
 						<div class="col">
 							<form:input type="text" class="from-control" placeholder="글제목"
@@ -110,7 +110,13 @@
 							<form:errors path="board_content" id="error_message" />
 						</div>
 					</div>
-
+					
+                	<div class="row mt-2">
+                		<div class="col">
+                			<input class="form-control form-control-sm" id="formFileSm" type="file" multiple name="uploadFiles">
+                		</div>
+                	</div>
+                	
 					<div class="row mt-2">
 						<div class="col">
 							<div align="left">

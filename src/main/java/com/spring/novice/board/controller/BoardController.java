@@ -1,8 +1,11 @@
 package com.spring.novice.board.controller;
 
+import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -15,10 +18,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.spring.novice.board.service.BoardService;
 import com.spring.novice.board.service.CommentService;
 import com.spring.novice.vo.BoardVo;
+import com.spring.novice.vo.FileVo;
 import com.spring.novice.vo.ReadPageVo;
 import com.spring.novice.vo.UserVo;
 
@@ -49,16 +54,65 @@ public class BoardController {
 	}
 
 	@RequestMapping("writeContentProcess")
-	public String writeContentProcess(@Valid BoardVo param, BindingResult result, HttpSession session) {
+	public String writeContentProcess(@Valid BoardVo param, BindingResult result, HttpSession session, MultipartFile [] uploadFiles ) {
 
 		if (result.hasErrors()) {
 			return "board/writeContentPage";
 		}
+		
+		ArrayList<FileVo> fileVoList = new ArrayList<FileVo>();
+		
+		String uploadFolder = "C:/uploadFolder/";
+		
+		if (uploadFiles != null) {
+			
+			for (MultipartFile uploadFile : uploadFiles) {
+				
+				if (uploadFile.isEmpty()) {
+					continue;
+				}
+				
+				Date today = new Date();
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+				String folderPath = sdf.format(today);
+				
+				File todayFoloder = new File(uploadFolder + folderPath);
+				
+				if (!todayFoloder.exists()) {
+					todayFoloder.mkdirs();
+				}
+				
+				String fileName = "";
+				UUID uuid = UUID.randomUUID();
+				fileName += uuid.toString();
+				
+				long currentTime = System.currentTimeMillis();
+				fileName += "_" + currentTime;
+				
+				String originalFileName = uploadFile.getOriginalFilename();
+ 				String ext = originalFileName.substring(originalFileName.lastIndexOf("."));
+ 				fileName += ext;
+ 				
+ 				try {
+					uploadFile.transferTo(new File(uploadFolder + folderPath + fileName));
+				}catch(Exception e) {
+					e.printStackTrace();
+				}
+ 				 				
+				String storedFileName = uuid.toString() + ext;
 
+ 				
+ 				FileVo fileVo = new FileVo();
+ 				fileVo.setOrg_file_name(originalFileName);
+ 				fileVo.setStored_file_name(storedFileName);
+ 				fileVoList.add(fileVo);
+			}
+		}
+		
 		UserVo sessionUser = (UserVo) session.getAttribute("sessionUser");
 		param.setUser_no(sessionUser.getUser_no());
 
-		boardService.insertBoard(param);
+		boardService.insertBoard(param, fileVoList);
 
 		return "redirect:./mainPage";
 

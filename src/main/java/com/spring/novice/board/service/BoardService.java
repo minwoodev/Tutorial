@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.spring.novice.board.mapper.BoardSQLMapper;
 import com.spring.novice.user.mapper.UserSQLMapper;
 import com.spring.novice.vo.BoardVo;
+import com.spring.novice.vo.FileVo;
 import com.spring.novice.vo.ReadPageVo;
 import com.spring.novice.vo.UserVo;
 
@@ -42,8 +43,19 @@ public class BoardService {
 		return dataList;
 	}
 
-	public void insertBoard(BoardVo param) {
+	public void insertBoard(BoardVo param, ArrayList<FileVo> fileVoList) {
+		
+		int boardNo = boardSQLMapper.createBoardPk();
+		param.setBoard_no(boardNo);
+		
 		boardSQLMapper.insertBoard(param);
+		
+		for (FileVo fileVo : fileVoList) {
+			fileVo.setBoard_no(boardNo);
+			
+			boardSQLMapper.insertFile(fileVo);
+		}
+		
 	}
 	
 	public HashMap<String, Object> getBoard(int board_no) {

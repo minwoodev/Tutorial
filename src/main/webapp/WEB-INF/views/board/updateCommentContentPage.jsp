@@ -86,7 +86,7 @@
 							<div class="row mt-3">
 								<div class="col">
 									<textarea onkeyup="cmaTextareaSize('floatingContent', 200);" class="form-control"
-										id="floatingContent" name="board_content">${data.commentVo.comment_content }
+										id="floatingContent" name="comment_content">${data.commentVo.comment_content }
 									</textarea> 																
 								</div>
 							</div>

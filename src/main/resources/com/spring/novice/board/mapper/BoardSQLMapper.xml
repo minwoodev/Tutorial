@@ -4,13 +4,17 @@
 
 <mapper namespace="com.spring.novice.board.mapper.BoardSQLMapper">
 	
+	<select id="createBoardPk" resultType="int">
+		SELECT novice_board_seq.nextval FROM Dual
+	</select>
+	
 	<select id="getBoardList" resultType="com.spring.novice.vo.BoardVo">
 		SELECT * FROM novice_board ORDER BY board_no DESC
 	</select>
 	
 	<insert id="insertBoard">
 		INSERT INTO novice_board VALUES (
-			novice_board_seq.nextval,
+			#{board_no},
 			#{user_no},
 			#{board_title},
 			#{board_content},
@@ -64,5 +68,16 @@
 	<update id="updateReadPage">
 		UPDATE novice_read_page SET read_write_date = SYSDATE WHERE client_ip = #{client_ip} AND board_no = #{board_no}
 	</update>
+	
+	<insert id="insertFile">
+		INSERT INTO novice_file VALUES (
+			novice_file_seq.nextval,
+			#{board_no},
+			#{org_file_name},
+			#{stored_file_name},
+			#{file_size},
+			SYSDATE
+		)
+	</insert>
 	
 </mapper>
