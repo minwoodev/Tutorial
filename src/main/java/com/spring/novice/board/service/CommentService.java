@@ -30,11 +30,11 @@ public class CommentService {
 		commentSQLMapper.insertComment(param);
 	}
 
-	public ArrayList<HashMap<String, Object>> getCommentList() {
+	public ArrayList<HashMap<String, Object>> getCommentList(int board_no) {
 
 		ArrayList<HashMap<String, Object>> dataList = new ArrayList<HashMap<String, Object>>();
 
-		ArrayList<CommentVo> commentVoList = commentSQLMapper.getCommentByList();
+		ArrayList<CommentVo> commentVoList = commentSQLMapper.getCommentByList(board_no);
 
 		for (CommentVo commentVo : commentVoList) {
 

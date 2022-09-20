@@ -103,7 +103,7 @@ public class BoardController {
 		}
 
 		HashMap<String, Object> map = boardService.getBoard(no);
-		ArrayList<HashMap<String, Object>> dataList = commentService.getCommentList();
+		ArrayList<HashMap<String, Object>> dataList = commentService.getCommentList(no);
 		
 		model.addAttribute("data", map);
 		model.addAttribute("dataList", dataList);

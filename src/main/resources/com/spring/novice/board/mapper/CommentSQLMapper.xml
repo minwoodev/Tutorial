@@ -14,6 +14,6 @@
 	</insert>
 	
 	<select id="getCommentByList" resultType="com.spring.novice.vo.CommentVo">
-		SELECT * FROM novice_comment ORDER BY comment_no DESC
+		SELECT * FROM novice_comment WHERE board_no = #{board_no}
 	</select>
 </mapper>
