@@ -23,7 +23,18 @@
 
     <script type="text/javascript" src="../resources/js/commons/loginBox.js"></script>
     <script type="text/javascript" src="../resources/js/frame/dropdown.js"></script>
-    <script type="text/javascript" src="../resources/js/frame/jquery-3.6.0.min.js"></script></head>
+    <script type="text/javascript" src="../resources/js/frame/jquery-3.6.0.min.js"></script>
+    
+    <script type="text/javascript">
+	    function fn_fileDown(fileNo){
+			var formObj = $("form[name='readForm']");
+			$("#FILE_NO").attr("value", fileNo);
+			formObj.attr("action", "/board/fileDown");
+			formObj.submit();
+		}
+    </script>
+    
+</head>
 <body>
 	<section class="container-fluid">
         <div class="row mt-4">
@@ -39,6 +50,10 @@
 						<i class="bi bi-list"></i> 상세보기 페이지
 					</h3>
                 </div>
+				
+				<form name="readForm" role="form" method="post">
+					<input type="hidden" id="FILE_NO" name="file_no" value="">
+				</form>
 
                 <!-- 페이지별 내용 시작-->
 				<div class="row mt-2">

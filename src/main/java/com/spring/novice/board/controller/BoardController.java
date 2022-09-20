@@ -1,13 +1,16 @@
 package com.spring.novice.board.controller;
 
 import java.io.File;
+import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -34,7 +37,7 @@ public class BoardController {
 
 	@Autowired
 	BoardService boardService;
-	
+
 	@Autowired
 	CommentService commentService;
 
@@ -54,72 +57,73 @@ public class BoardController {
 	}
 
 	@RequestMapping("writeContentProcess")
-	public String writeContentProcess(@Valid BoardVo param, BindingResult result, HttpSession session, MultipartFile [] uploadFiles ) {
+	public String writeContentProcess(@Valid BoardVo param, BindingResult result, HttpSession session,
+			MultipartFile[] uploadFiles) {
 
 		if (result.hasErrors()) {
 			return "board/writeContentPage";
 		}
-		
+
 		ArrayList<FileVo> fileVoList = new ArrayList<FileVo>();
-		
+
 		String uploadFolder = "C:/uploadFolder/";
-		
+
 		if (uploadFiles != null) {
-			
 			for (MultipartFile uploadFile : uploadFiles) {
-				
 				if (uploadFile.isEmpty()) {
 					continue;
 				}
-				
+
+				// 날짜별 폴더 생성... 2022/01/19/
 				Date today = new Date();
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd");
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd/");
 				String folderPath = sdf.format(today);
-				
-				File todayFoloder = new File(uploadFolder + folderPath);
-				
-				if (!todayFoloder.exists()) {
-					todayFoloder.mkdirs();
+
+				File todayFolder = new File(uploadFolder + folderPath);
+
+				if (!todayFolder.exists()) {
+					todayFolder.mkdirs();
 				}
-				
+
+				// 중복되지 않게 저장해야된다...!!...
+				// 방법 : 랜덤 + 시간
 				String fileName = "";
 				UUID uuid = UUID.randomUUID();
 				fileName += uuid.toString();
-				
+
 				long currentTime = System.currentTimeMillis();
 				fileName += "_" + currentTime;
-				
+
+				// 확장자 추가...
 				String originalFileName = uploadFile.getOriginalFilename();
- 				String ext = originalFileName.substring(originalFileName.lastIndexOf("."));
- 				fileName += ext;
- 				
- 				try {
+				String ext = originalFileName.substring(originalFileName.lastIndexOf("."));
+				fileName += ext;
+
+				try {
 					uploadFile.transferTo(new File(uploadFolder + folderPath + fileName));
-				}catch(Exception e) {
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
- 				 				
+
 				String storedFileName = uuid.toString() + ext;
 
- 				
- 				FileVo fileVo = new FileVo();
- 				fileVo.setOrg_file_name(originalFileName);
- 				fileVo.setStored_file_name(storedFileName);
- 				fileVoList.add(fileVo);
+				FileVo fileVo = new FileVo();
+				fileVo.setOrg_file_name(originalFileName);
+				fileVo.setStored_file_name(storedFileName);
+				fileVoList.add(fileVo);
 			}
 		}
-		
+
 		UserVo sessionUser = (UserVo) session.getAttribute("sessionUser");
 		param.setUser_no(sessionUser.getUser_no());
 
 		boardService.insertBoard(param, fileVoList);
-
 		return "redirect:./mainPage";
-
 	}
-	
+
 	@RequestMapping("readContentPage")
-	public String readContentPage(@RequestParam(value="board_no", defaultValue="0") int no, Model model, HttpServletRequest request) {
+	public String readContentPage(@RequestParam(value = "board_no", defaultValue = "0") int no, Model model,
+			HttpServletRequest request) {
 		ArrayList<ReadPageVo> readPageVo = boardService.getReadPageList(no);
 
 		if (boardService.isSelectReadBoardNo(no)) {
@@ -158,9 +162,9 @@ public class BoardController {
 
 		HashMap<String, Object> map = boardService.getBoard(no);
 		ArrayList<HashMap<String, Object>> dataList = commentService.getCommentList(no);
-		
+
 		ArrayList<HashMap<String, Object>> fileList = boardService.selectFileList(no);
-		
+
 		model.addAttribute("data", map);
 		model.addAttribute("dataList", dataList);
 		model.addAttribute("fileList", fileList);
@@ -170,33 +174,54 @@ public class BoardController {
 
 	@RequestMapping("updateContentPage")
 	public String updateContentPage(int board_no, Model model) {
-		
+
 		HashMap<String, Object> data = boardService.getBoard(board_no);
-		
+
 		model.addAttribute("data", data);
-		
+
 		return "board/updateContentPage";
-		
-	}	
-	
+
+	}
+
 	@RequestMapping("updateContentProcess")
 	public String updateContentProcess(@Valid BoardVo param, BindingResult result) {
-		
+
 		if (result.hasErrors()) {
 			return "board/udpateContentPage";
 		}
-		
+
 		boardService.updateBoard(param);
-		
-		return "redirect:./readContentPage?board_no="+param.getBoard_no();
+
+		return "redirect:./readContentPage?board_no=" + param.getBoard_no();
 	}
-	
+
 	@RequestMapping("deleteContentProcess")
 	public String deleteContentProcess(int board_no) {
-		
+
 		boardService.deleteContentPage(board_no);
-		
+
 		return "redirect:./mainPage";
+
+	}
+
+	@RequestMapping(value = "/fileDown")
+	public void fileDown(@RequestParam Map<String, Object> map, HttpServletResponse response) throws Exception {
+		Map<String, Object> resultMap = boardService.selectFileInfo(map);
+		String storedFileName = (String) resultMap.get("STORED_FILE_NAME");
+		String originalFileName = (String) resultMap.get("ORG_FILE_NAME");
+		Date today = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd/");
+		String folderPath = sdf.format(today);
 		
+		// 파일을 저장했던 위치에서 첨부파일을 읽어 byte[]형식으로 변환한다.
+		byte fileByte[] = org.apache.commons.io.FileUtils.readFileToByteArray(new File("C://uploadFolder//"+folderPath+"//" + storedFileName));
+
+		response.setContentType("application/octet-stream");
+		response.setContentLength(fileByte.length);
+		response.setHeader("Content-Disposition",
+				"attachment; fileName=\"" + URLEncoder.encode(originalFileName, "UTF-8") + "\";");
+		response.getOutputStream().write(fileByte);
+		response.getOutputStream().flush();
+		response.getOutputStream().close();
 	}
 }

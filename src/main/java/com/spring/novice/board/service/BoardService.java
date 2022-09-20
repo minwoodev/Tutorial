@@ -2,6 +2,7 @@ package com.spring.novice.board.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -111,6 +112,12 @@ public class BoardService {
 	
 	public ArrayList<HashMap<String, Object>> selectFileList(int board_no) {
 		ArrayList<HashMap<String, Object>> list = boardSQLMapper.selectFileList(board_no);
+		
+		return list;
+	}
+	
+	public Map<String, Object> selectFileInfo(Map<String, Object> map) {
+		Map<String, Object> list = boardSQLMapper.selectFileInfo(map);
 		
 		return list;
 	}
