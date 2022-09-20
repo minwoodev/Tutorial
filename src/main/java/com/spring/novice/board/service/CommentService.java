@@ -61,10 +61,12 @@ public class CommentService {
 		HashMap<String, Object> map = new HashMap<String, Object>();
 
 		int userNo = commentVo.getUser_no();
+		BoardVo boardVo = boardSQLMapper.getBoardByNo(commentVo.getBoard_no());
 		UserVo userVo = userSQLMapper.getUserByNo(userNo);
 
 		map.put("commentVo", commentVo);
 		map.put("userVo", userVo);
+		map.put("boardVo", boardVo);
 
 		return map;
 

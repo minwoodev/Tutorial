@@ -60,6 +60,52 @@
 						<i class="bi bi-list"></i> 댓글수정 페이지
 					</h3>
                 </div>
+                
+                <div class="row mt-3">
+                	<form:form action="./updateCommentContentProcess" modelAttribute="commentVo" id="updateCommentContentForm">
+						<div class="col">
+
+							<div class="row mt-3">
+								<div class="col">
+									작성자 : <input type="text" value="${data.userVo.user_nickname }" disabled="disabled">	
+								</div>                		
+							</div>
+							
+							<div class="row mt-3">
+								<div class="col">
+									게시글 번호 : <input type="text" value="${data.boardVo.board_no }" disabled="disabled">
+								</div>
+							</div>
+							
+							<div class="row mt-3">
+								<div class="col">
+									게시글 제목 : <input type="text" value="${data.boardVo.board_title }" disabled="disabled">
+								</div>
+							</div>
+
+							<div class="row mt-3">
+								<div class="col">
+									<textarea onkeyup="cmaTextareaSize('floatingContent', 200);" class="form-control"
+										id="floatingContent" name="board_content">${data.commentVo.comment_content }
+									</textarea> 																
+								</div>
+							</div>
+							
+							<div class="row mt-2">
+								<div class="col"></div>
+								<div class="col"></div>
+								<div class="col">
+									<a href="./readContentPage?board_no=${data.boardVo.board_no }" class="btn btn-dark" style="float: right;">수정취소</a>
+									<input type="submit" class="btn btn-dark" style="float: right;" value="수정완료">
+								</div>
+							</div>																							
+						</div>
+						
+						<input type="hidden" name="comment_no" value="${data.commentVo.comment_no }">
+						
+					</form:form>
+                </div>
+                
 			</div>
 		</div>               	
 	</section>
