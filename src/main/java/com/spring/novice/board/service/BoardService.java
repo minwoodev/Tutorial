@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spring.novice.board.mapper.BoardSQLMapper;
+import com.spring.novice.board.mapper.CommentSQLMapper;
 import com.spring.novice.user.mapper.UserSQLMapper;
 import com.spring.novice.vo.BoardVo;
 import com.spring.novice.vo.FileVo;
@@ -24,6 +25,7 @@ public class BoardService {
 	UserSQLMapper userSQLMapper;
 	
 	@Autowired
+	CommentSQLMapper commentSQLMapper;
 
 	public ArrayList<HashMap<String, Object>> getBoardList() {
 		ArrayList<HashMap<String, Object>> dataList = new ArrayList<HashMap<String, Object>>();
@@ -79,7 +81,18 @@ public class BoardService {
 	}
 	
 	public void deleteContentPage(int board_no) {
+		/* 게시글 삭제 */
 		boardSQLMapper.deleteContentPage(board_no);
+		
+		/* 게시글 댓글 삭제 */
+		commentSQLMapper.deleteAllComment(board_no);
+		
+		/* 게시글 중복 조회 증가 방지 삭제 */
+		boardSQLMapper.deleteReadPage(board_no);
+		
+		/* 게시글 첨부파일 삭제 */
+		boardSQLMapper.deleteAllFile(board_no);
+		
 	}
 	
 	public void insertReadPage(ReadPageVo param) {

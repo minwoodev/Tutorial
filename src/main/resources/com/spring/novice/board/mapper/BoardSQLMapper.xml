@@ -69,6 +69,10 @@
 		UPDATE novice_read_page SET read_write_date = SYSDATE WHERE client_ip = #{client_ip} AND board_no = #{board_no}
 	</update>
 	
+	<delete id="deleteReadPage">
+		DELETE FROM novice_read_page WHERE board_no = #{board_no}
+	</delete>
+	
 	<insert id="insertFile">
 		INSERT INTO novice_file VALUES (
 			novice_file_seq.nextval,
@@ -87,5 +91,9 @@
 	<select id="selectFileInfo" parameterType="HashMap" resultType="HashMap">
 		SELECT org_file_name, stored_file_name FROM novice_file WHERE file_no = #{file_no}
 	</select>
+	
+	<delete id="deleteAllFile">
+		DELETE FROM novice_file WHERE board_no = #{board_no}
+	</delete>
 	
 </mapper>

@@ -24,6 +24,9 @@
 		      </li>
 			</c:when>
 			<c:otherwise>
+			  <li class="nav-item">
+			  	<a class="nav-link" href="../board/mainPage">홈</a>
+			  </li>
 		      <li class="nav-item">
 		        <a class="nav-link" href="../user/loginPage">로그인</a>
 		      </li>

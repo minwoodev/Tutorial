@@ -21,4 +21,8 @@ public interface CommentSQLMapper {
 	/* 댓글 삭제 */
 	public void deleteComment(int comment_no);
 	
+	/* 게시글 댓글 전체 삭제*/
+	public void deleteAllComment(int board_no);
+	
+	
 }

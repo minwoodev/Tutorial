@@ -45,6 +45,9 @@ public interface BoardSQLMapper {
 	
 	public void updateReadPage(ReadPageVo param);
 	
+	/* 조회수 증가 중복 삭제 */
+	public void deleteReadPage(int board_no);
+	
 	/* 게시글 번호 증가 */
 	public int createBoardPk();
 	
@@ -56,5 +59,8 @@ public interface BoardSQLMapper {
 	
 	/* 첨부파일 정보 */
 	public Map<String, Object> selectFileInfo(Map<String, Object> map);
+	
+	/* 게시글 첨부파일 전체 삭제 */
+	public void deleteAllFile(int board_no);
 	
 }
