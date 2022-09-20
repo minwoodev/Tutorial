@@ -16,4 +16,18 @@
 	<select id="getCommentByList" resultType="com.spring.novice.vo.CommentVo">
 		SELECT * FROM novice_comment WHERE board_no = #{board_no}
 	</select>
+	
+	<select id="getCommentByNo" resultType="com.spring.novice.vo.CommentVo">
+		SELECT * FROM novice_comment WHERE comment_no = #{comment_no}
+	</select>
+	
+	<update id="updateComment">
+		UPDATE novice_comment SET comment_content = #{comment_content} WHERE comment_no = #{comment_no}
+	</update>
+	
+	<delete id="deleteComment">
+		DELETE FROM novice_comment WHERE comment_no = #{comment_no}
+	</delete>
+	
+	
 </mapper>

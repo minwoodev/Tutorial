@@ -53,4 +53,28 @@ public class CommentService {
 
 		return dataList;
 	}
+	
+	public HashMap<String, Object> getComment(int comment_no) {
+
+		CommentVo commentVo = commentSQLMapper.getCommentByNo(comment_no);
+
+		HashMap<String, Object> map = new HashMap<String, Object>();
+
+		int userNo = commentVo.getUser_no();
+		UserVo userVo = userSQLMapper.getUserByNo(userNo);
+
+		map.put("commentVo", commentVo);
+		map.put("userVo", userVo);
+
+		return map;
+
+	}
+	
+	public void updateComment(CommentVo param) {
+		commentSQLMapper.updateComment(param);
+	}
+	
+	public void deleteComment(int comment_no) {
+		commentSQLMapper.deleteComment(comment_no);
+	}
 }

@@ -53,5 +53,35 @@ public class CommentController {
 
 		return "redirect:./readContentPage?board_no=" + param.getBoard_no();
 	}
+	
+	@RequestMapping("updateCommentContentPage")
+	public String updateCommentContentPage(@ModelAttribute("commentVo") CommentVo param, int comment_no, Model model) {
+
+		HashMap<String, Object> data = commentService.getComment(comment_no);
+
+		model.addAttribute("data", data);
+
+		return "board/updateCommentContentPage";
+
+	}
+
+	@RequestMapping("updateCommentContentProcess")
+	public String updateCommentContentProcess(@Valid CommentVo param, BindingResult result) {
+		if (result.hasErrors()) {
+			return "board/updateCommentContentPage";
+		}
+		
+		commentService.updateComment(param);
+		
+		return "redirect:./readContentPage??board_no=" + param.getBoard_no();
+	}
+	
+	@RequestMapping("deleteCommentContentProcess")
+	public String deleteCommentContentProcess(int comment_no, int board_no) {
+		
+		commentService.deleteComment(comment_no);
+		
+		return "redirect:./readContentPage??board_no=" + board_no;
+	}
 
 }
