@@ -21,6 +21,8 @@ public class BoardService {
 
 	@Autowired
 	UserSQLMapper userSQLMapper;
+	
+	@Autowired
 
 	public ArrayList<HashMap<String, Object>> getBoardList() {
 		ArrayList<HashMap<String, Object>> dataList = new ArrayList<HashMap<String, Object>>();
@@ -105,5 +107,11 @@ public class BoardService {
 
 	public void updateReadPage(ReadPageVo param) {
 		boardSQLMapper.updateReadPage(param);
+	}
+	
+	public ArrayList<HashMap<String, Object>> selectFileList(int board_no) {
+		ArrayList<HashMap<String, Object>> list = boardSQLMapper.selectFileList(board_no);
+		
+		return list;
 	}
 }

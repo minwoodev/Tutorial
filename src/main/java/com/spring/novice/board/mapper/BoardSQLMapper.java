@@ -1,6 +1,7 @@
 package com.spring.novice.board.mapper;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.spring.novice.vo.BoardVo;
 import com.spring.novice.vo.FileVo;
@@ -48,5 +49,8 @@ public interface BoardSQLMapper {
 	
 	/* 첨부파일 */
 	public void insertFile(FileVo param);
+	
+	/* 첨부파일 목록 */
+	public ArrayList<HashMap<String, Object>> selectFileList(int board_no);
 	
 }

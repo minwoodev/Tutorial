@@ -80,4 +80,8 @@
 		)
 	</insert>
 	
+	<select id="selectFileList" resultType="com.spring.novice.vo.FileVo">
+		SELECT * FROM novice_file WHERE board_no = #{board_no}
+	</select>
+	
 </mapper>

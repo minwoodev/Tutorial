@@ -86,6 +86,17 @@
 					</div>				
 				</div>
 				
+				<div class="row mt-2">
+					<span>파일 목록</span>
+					<div class="col">
+						<c:forEach items="${fileList }" var="file">
+							<div class="form-group" style="border: 1px solid #dbdbdb;">
+								<a href="#" onclick="fn_fileDown('${file.file_no}'); return false;">${file.org_file_name}</a>(${file.file_size}kb)<br>
+							</div>
+						</c:forEach>
+					</div>
+				</div> 
+				
 				<div class="row mt-3">
 						<table class="table" style="border-top:1px solid steelblue; border-bottom:2px solid steelblue">
 						<thead>

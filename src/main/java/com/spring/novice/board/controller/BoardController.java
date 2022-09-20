@@ -159,8 +159,11 @@ public class BoardController {
 		HashMap<String, Object> map = boardService.getBoard(no);
 		ArrayList<HashMap<String, Object>> dataList = commentService.getCommentList(no);
 		
+		ArrayList<HashMap<String, Object>> fileList = boardService.selectFileList(no);
+		
 		model.addAttribute("data", map);
 		model.addAttribute("dataList", dataList);
+		model.addAttribute("fileList", fileList);
 
 		return "board/readContentPage";
 	}
