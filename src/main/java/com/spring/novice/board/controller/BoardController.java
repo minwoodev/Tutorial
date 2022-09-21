@@ -43,9 +43,9 @@ public class BoardController {
 	CommentService commentService;
 
 	@RequestMapping("mainPage")
-	public String mainPage(Model model) {
+	public String mainPage(Model model, String category, String keyword) {
 
-		ArrayList<HashMap<String, Object>> dataList = boardService.getBoardList();
+		ArrayList<HashMap<String, Object>> dataList = boardService.getBoardList(category, keyword);
 
 		model.addAttribute("dataList", dataList);
 

@@ -30,11 +30,25 @@ public class BoardService {
 	@Autowired
 	CommentSQLMapper commentSQLMapper;
 
-	public ArrayList<HashMap<String, Object>> getBoardList() {
+	public ArrayList<HashMap<String, Object>> getBoardList(String category, String keyword) {
 		ArrayList<HashMap<String, Object>> dataList = new ArrayList<HashMap<String, Object>>();
 
 		ArrayList<BoardVo> boardVoList = boardSQLMapper.getBoardList();
 
+		if (category != null || keyword != null) {
+			switch (category) {
+				case "title": 
+					boardVoList = boardSQLMapper.selectByTitle(keyword);
+					break;
+				case "content":
+					boardVoList = boardSQLMapper.selectByContent(keyword);
+					break;
+				case "nick":
+					boardVoList = boardSQLMapper.selectByNickName(keyword);
+					break;
+			}
+		}
+		
 		for (BoardVo boardVo : boardVoList) {
 
 			int userNo = boardVo.getUser_no();
@@ -149,9 +163,5 @@ public class BoardService {
 		Map<String, Object> list = boardSQLMapper.selectFileInfo(map);
 
 		return list;
-	}
-
-	public ArrayList<FileVo> getFileByNo(int board_no) {
-		return boardSQLMapper.getFileByNo(board_no);
 	}
 }

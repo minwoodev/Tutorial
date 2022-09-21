@@ -39,7 +39,7 @@
 				</div>
                 <!-- page Title -->
                 <div class="row mt-1 conTitleArea">
-                    <form action="./mainPage" method="post">
+                    <form action="../board/mainPage" method="post">
                 		<div class="row mt-3">
                 			<div class="col">
                 				<select name ="category" class="form-select">

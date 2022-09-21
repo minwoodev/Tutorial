@@ -66,8 +66,13 @@ public interface BoardSQLMapper {
 	/* 게시글 첨부 파일 수정 */	
 	public void updateFile(int file_no);
 	
-	/* 게시글 파일 정보 불러오기*/
-	public ArrayList<FileVo> getFileByNo(int board_no);
+	/* 게시글 제목 검색 */
+	public ArrayList<BoardVo> selectByTitle(String title);
 	
+	/* 게시글 내용 검색 */
+	public ArrayList<BoardVo> selectByContent(String content);
+	
+	/* 게시글 작성자 검색*/
+	public ArrayList<BoardVo> selectByNickName(String user_nickname);
 	
 }

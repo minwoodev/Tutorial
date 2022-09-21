@@ -101,8 +101,30 @@
 		UPDATE novice_file SET file_del = 'Y' WHERE file_no = #{file_no}
 	</update>
 	
-	<select id="getFileByNo" resultType="com.spring.novice.vo.FileVo">
-		SELECT * FROM novice_file WHERE board_no = #{board_no}
+	<select id="selectByTitle" resultType="com.spring.novice.vo.BoardVo">
+		SELECT t2.* FROM (
+			SELECT t1.* , ROWNUM AS rnum FROM (			
+				SELECT nb.* FROM novice_board nb , novice_user nu 
+				WHERE nb.user_no = nu.user_no AND nb.board_title LIKE '%' || #{title} || '%' ORDER BY nb.board_no DESC
+			) t1
+		) t2
 	</select>
 	
+	<select id="selectByContent" resultType="com.spring.novice.vo.BoardVo">
+		SELECT t2.* FROM (
+			SELECT t1.* , ROWNUM AS rnum FROM (			
+				SELECT nb.* FROM novice_board nb , novice_user nu 
+				WHERE nb.user_no = nu.user_no AND nb.board_content  LIKE '%' || #{content} || '%' ORDER BY nb.board_no DESC
+			) t1
+		) t2
+	</select>
+	
+	<select id="selectByNickName" resultType="com.spring.novice.vo.BoardVo">
+		SELECT t2.* FROM (
+			SELECT t1.* , ROWNUM AS rnum FROM (			
+				SELECT nb.* FROM novice_board nb , novice_user nu 
+				WHERE nb.user_no = nu.user_no AND nu.user_nickname LIKE '%' || #{user_nickname} || '%' ORDER BY nb.board_no DESC
+			) t1
+		) t2
+	</select>
 </mapper>
