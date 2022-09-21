@@ -106,14 +106,14 @@ public class BoardController {
 					e.printStackTrace();
 				}
 
-				String storedFileName = uuid.toString() + ext;
-
 				FileVo fileVo = new FileVo();
 				fileVo.setOrg_file_name(originalFileName);
-				fileVo.setStored_file_name(storedFileName);
+				fileVo.setStored_file_name(fileName);
 				fileVoList.add(fileVo);
 			}
 		}
+
+		System.out.println(uploadFiles);
 
 		UserVo sessionUser = (UserVo) session.getAttribute("sessionUser");
 		param.setUser_no(sessionUser.getUser_no());
@@ -189,29 +189,57 @@ public class BoardController {
 	@RequestMapping("updateContentProcess")
 	public String updateContentProcess(@Valid BoardVo param, BindingResult result,
 			@RequestParam(value = "fileNoDel[]") String[] files,
-			@RequestParam(value = "fileNameDel[]") String[] fileNames, MultipartFile[] uploadFiles) {
+			@RequestParam(value = "fileNameDel[]") String[] fileNames,
+			@RequestParam(value = "uploadFiles") MultipartFile[] uploadFiles) {
 
 		if (result.hasErrors()) {
 			return "board/udpateContentPage";
 		}
 
-		ArrayList<FileVo> fileVoList = boardService.getFileByNo(param.getBoard_no());
+		ArrayList<FileVo> fileVoList = new ArrayList<FileVo>();
 
-		for (int i = 0; i < fileVoList.size(); i++) {
-			
-			Date today = new Date(fileVoList.get(i).getUpload_write_date().getTime());
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd/");
-			String folderPath = sdf.format(today);
-			
-			System.out.println("org_file_name : " + fileVoList.get(i).getOrg_file_name());
-			System.out.println("stored_file_name : " + fileVoList.get(i).getStored_file_name());
-			File file = new File("C://uploadFolder//" + folderPath + "//" + fileVoList.get(i).getStored_file_name());
+		Date today = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd/");
+		String folderPath = sdf.format(today);
+		File todayFolder = new File("C://uploadFolder//" + folderPath);
 
-			if (file.exists()) {
-				if (files != null) {
-					boardService.updateFile(fileVoList.get(i).getFile_no());
+		if (uploadFiles != null) {
+			for (MultipartFile uploadFile : uploadFiles) {
+				if (uploadFile.isEmpty()) {
+					continue;
 				}
-			} 
+
+				if (!todayFolder.exists()) {
+					todayFolder.mkdirs();
+				}
+
+				// 중복되지 않게 저장해야된다...!!...
+				// 방법 : 랜덤 + 시간
+				String fileName = "";
+				UUID uuid = UUID.randomUUID();
+				fileName += uuid.toString();
+
+				long currentTime = System.currentTimeMillis();
+				fileName += "_" + currentTime;
+
+				// 확장자 추가...
+				String originalFileName = uploadFile.getOriginalFilename();
+				String ext = originalFileName.substring(originalFileName.lastIndexOf("."));
+				fileName += ext;
+
+				try {
+					uploadFile.transferTo(new File("C://uploadFolder//" + folderPath + fileName));
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+
+				FileVo fileVo = new FileVo();
+				fileVo.setBoard_no(param.getBoard_no());
+				fileVo.setOrg_file_name(originalFileName);
+				fileVo.setStored_file_name(fileName);
+				fileVo.setFile_size((int) uploadFile.getSize());
+				fileVoList.add(fileVo);
+			}
 		}
 
 		boardService.updateBoard(param, files, fileNames, fileVoList);
@@ -239,7 +267,6 @@ public class BoardController {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd/");
 		String folderPath = sdf.format(today);
 
-		
 		// 파일을 저장했던 위치에서 첨부파일을 읽어 byte[]형식으로 변환한다.
 		byte fileByte[] = org.apache.commons.io.FileUtils
 				.readFileToByteArray(new File("C://uploadFolder//" + folderPath + "//" + storedFileName));

@@ -40,6 +40,16 @@
 	</style>
 
 	<script>
+		$(document).ready(function(){
+			var formObj = $("form[name='updateForm']");
+			
+			$(document).on("click","#fileDel", function(){
+				$(this).parent().remove();
+			})			
+			
+			fn_addFile();	
+			
+		})
 		function checkRadioBox() {
 			var checkVal = $('input[name=board_secret]:checked').val();
 			if (!$('input:radio[name=board_secret]').is(":checked")) {
@@ -64,6 +74,19 @@
  			$("#fileNameDel").attr("value", fileNameArry);
  		}
  		
+ 		
+ 		function fn_addFile(){
+			var fileIndex = 1;
+			//$("#fileIndex").append("<div><input type='file' style='float:left;' name='file_"+(fileIndex++)+"'>"+"<button type='button' style='float:right;' id='fileAddBtn'>"+"추가"+"</button></div>");
+			$(".fileAdd_btn").on("click", function(){
+				$("#fileIndex").append("<div><input type='file' style='float:left;' name='uploadFiles'>"+"</button>"+"<button type='button' style='float:right;' id='fileDelBtn'>"+"삭제"+"</button></div>");
+			});
+			$(document).on("click","#fileDelBtn", function(){
+				$(this).parent().remove();
+				
+			});
+		}
+ 		
 	</script>    
 <body>
 <section class="container-fluid">
@@ -84,7 +107,7 @@
                 <!-- 페이지별 내용 시작-->
                 
                 <div class="row mt-3">
-                	<form:form action="./updateContentProcess" modelAttribute="boardVo" id="updateContentForm">
+                	<form:form action="./updateContentProcess" modelAttribute="boardVo" id="updateContentForm" enctype="multipart/form-data">
 						<div class="col">
 							<div class="row mt-3">
 								<div class="col">
@@ -119,12 +142,14 @@
 						<div class="row mt-2">
 							<span>파일 목록</span>
 							<div class="col">
-								<c:forEach items="${file }" var="file" varStatus="var">
-									<div class="form-group" style="border: 1px solid #dbdbdb;">
-										<a href="#" onclick="return false;">${file.org_file_name}</a>(${file.file_size}kb)
-										<button id="fileDel" onclick="fn_del('${file.file_no}','FILE_NO_${var.index}');" type="button" class="btn btn-dark">삭제</button><br>
-									</div>
-								</c:forEach>
+								<div id="fileIndex">
+									<c:forEach items="${file }" var="file" varStatus="var">
+										<div class="form-group" style="border: 1px solid #dbdbdb;">
+											<a href="#" onclick="return false;">${file.org_file_name}</a>(${file.file_size}kb)
+											<button id="fileDel" onclick="fn_del('${file.file_no}','FILE_NO_${var.index}');" type="button" class="btn btn-dark">삭제</button><br>
+										</div>
+									</c:forEach>
+								</div>
 							</div>
 						</div> 
 							
@@ -134,6 +159,7 @@
 								<div class="col">
 									<a href="./readContentPage?board_no=${data.boardVo.board_no }" class="btn btn-dark" style="float: right;">수정취소</a>
 									<input type="submit" class="btn btn-dark" style="float: right;" value="수정완료">
+									<button type="button" class="fileAdd_btn btn btn-dark">파일추가</button>
 								</div>
 							</div>																							
 						</div>

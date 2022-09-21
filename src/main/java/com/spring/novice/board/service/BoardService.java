@@ -1,6 +1,9 @@
 package com.spring.novice.board.service;
 
+import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -23,7 +26,7 @@ public class BoardService {
 
 	@Autowired
 	UserSQLMapper userSQLMapper;
-	
+
 	@Autowired
 	CommentSQLMapper commentSQLMapper;
 
@@ -49,56 +52,65 @@ public class BoardService {
 	}
 
 	public void insertBoard(BoardVo param, ArrayList<FileVo> fileVoList) {
-		
+
 		int boardNo = boardSQLMapper.createBoardPk();
 		param.setBoard_no(boardNo);
-		
+
 		boardSQLMapper.insertBoard(param);
-		
+
 		for (FileVo fileVo : fileVoList) {
 			fileVo.setBoard_no(boardNo);
-			
+
 			boardSQLMapper.insertFile(fileVo);
 		}
-		
+
 	}
-	
+
 	public HashMap<String, Object> getBoard(int board_no) {
 
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		
+
 		BoardVo boardVo = boardSQLMapper.getBoardByNo(board_no);
 		UserVo userVo = userSQLMapper.getUserByNo(boardVo.getUser_no());
-		
+
 		map.put("userVo", userVo);
 		map.put("boardVo", boardVo);
-		
+
 		return map;
 	}
-	
+
 	public void updateBoard(BoardVo param, String file[], String fileNames[], ArrayList<FileVo> fileVoList) {
 		boardSQLMapper.updateBoard(param);
+
+		for (int i = 0; i < file.length; i++) {
+			boardSQLMapper.updateFile(Integer.parseInt(file[i]));
+		}
+
+		for (int i = 0; i < fileVoList.size(); i ++) {
+			boardSQLMapper.insertFile(fileVoList.get(i));
+		}
+		
 	}
-	
+
 	public void updateFile(int file_no) {
 		boardSQLMapper.updateFile(file_no);
 	}
-	
+
 	public void deleteContentPage(int board_no) {
 		/* 게시글 삭제 */
 		boardSQLMapper.deleteContentPage(board_no);
-		
+
 		/* 게시글 댓글 삭제 */
 		commentSQLMapper.deleteAllComment(board_no);
-		
+
 		/* 게시글 중복 조회 증가 방지 삭제 */
 		boardSQLMapper.deleteReadPage(board_no);
-		
+
 		/* 게시글 첨부파일 삭제 */
 		boardSQLMapper.deleteAllFile(board_no);
-		
+
 	}
-	
+
 	public void insertReadPage(ReadPageVo param) {
 		boardSQLMapper.insertReadPage(param);
 	}
@@ -126,19 +138,19 @@ public class BoardService {
 	public void updateReadPage(ReadPageVo param) {
 		boardSQLMapper.updateReadPage(param);
 	}
-	
+
 	public ArrayList<HashMap<String, Object>> selectFileList(int board_no) {
 		ArrayList<HashMap<String, Object>> list = boardSQLMapper.selectFileList(board_no);
-		
+
 		return list;
 	}
-	
+
 	public Map<String, Object> selectFileInfo(Map<String, Object> map) {
 		Map<String, Object> list = boardSQLMapper.selectFileInfo(map);
-		
+
 		return list;
 	}
-	
+
 	public ArrayList<FileVo> getFileByNo(int board_no) {
 		return boardSQLMapper.getFileByNo(board_no);
 	}
