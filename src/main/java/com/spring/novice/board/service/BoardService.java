@@ -76,8 +76,12 @@ public class BoardService {
 		return map;
 	}
 	
-	public void updateBoard(BoardVo param) {
+	public void updateBoard(BoardVo param, String file[], String fileNames[], ArrayList<FileVo> fileVoList) {
 		boardSQLMapper.updateBoard(param);
+	}
+	
+	public void updateFile(int file_no) {
+		boardSQLMapper.updateFile(file_no);
 	}
 	
 	public void deleteContentPage(int board_no) {
@@ -133,5 +137,9 @@ public class BoardService {
 		Map<String, Object> list = boardSQLMapper.selectFileInfo(map);
 		
 		return list;
+	}
+	
+	public ArrayList<FileVo> getFileByNo(int board_no) {
+		return boardSQLMapper.getFileByNo(board_no);
 	}
 }

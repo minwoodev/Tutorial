@@ -2,6 +2,7 @@ package com.spring.novice.board.controller;
 
 import java.io.File;
 import java.net.URLEncoder;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -173,24 +174,47 @@ public class BoardController {
 	}
 
 	@RequestMapping("updateContentPage")
-	public String updateContentPage(int board_no, Model model) {
+	public String updateContentPage(@ModelAttribute("boardVo") BoardVo param, int board_no, Model model) {
 
 		HashMap<String, Object> data = boardService.getBoard(board_no);
+		ArrayList<HashMap<String, Object>> fileList = boardService.selectFileList(board_no);
 
 		model.addAttribute("data", data);
+		model.addAttribute("file", fileList);
 
 		return "board/updateContentPage";
 
 	}
 
 	@RequestMapping("updateContentProcess")
-	public String updateContentProcess(@Valid BoardVo param, BindingResult result) {
+	public String updateContentProcess(@Valid BoardVo param, BindingResult result,
+			@RequestParam(value = "fileNoDel[]") String[] files,
+			@RequestParam(value = "fileNameDel[]") String[] fileNames, MultipartFile[] uploadFiles) {
 
 		if (result.hasErrors()) {
 			return "board/udpateContentPage";
 		}
 
-		boardService.updateBoard(param);
+		ArrayList<FileVo> fileVoList = boardService.getFileByNo(param.getBoard_no());
+
+		for (int i = 0; i < fileVoList.size(); i++) {
+			
+			Date today = new Date(fileVoList.get(i).getUpload_write_date().getTime());
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd/");
+			String folderPath = sdf.format(today);
+			
+			System.out.println("org_file_name : " + fileVoList.get(i).getOrg_file_name());
+			System.out.println("stored_file_name : " + fileVoList.get(i).getStored_file_name());
+			File file = new File("C://uploadFolder//" + folderPath + "//" + fileVoList.get(i).getStored_file_name());
+
+			if (file.exists()) {
+				if (files != null) {
+					boardService.updateFile(fileVoList.get(i).getFile_no());
+				}
+			} 
+		}
+
+		boardService.updateBoard(param, files, fileNames, fileVoList);
 
 		return "redirect:./readContentPage?board_no=" + param.getBoard_no();
 	}
@@ -209,12 +233,16 @@ public class BoardController {
 		Map<String, Object> resultMap = boardService.selectFileInfo(map);
 		String storedFileName = (String) resultMap.get("STORED_FILE_NAME");
 		String originalFileName = (String) resultMap.get("ORG_FILE_NAME");
-		Date today = new Date();
+		Timestamp time = (Timestamp) resultMap.get("UPLOAD_WRITE_DATE");
+
+		Date today = new Date(time.getTime());
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd/");
 		String folderPath = sdf.format(today);
+
 		
 		// 파일을 저장했던 위치에서 첨부파일을 읽어 byte[]형식으로 변환한다.
-		byte fileByte[] = org.apache.commons.io.FileUtils.readFileToByteArray(new File("C://uploadFolder//"+folderPath+"//" + storedFileName));
+		byte fileByte[] = org.apache.commons.io.FileUtils
+				.readFileToByteArray(new File("C://uploadFolder//" + folderPath + "//" + storedFileName));
 
 		response.setContentType("application/octet-stream");
 		response.setContentLength(fileByte.length);

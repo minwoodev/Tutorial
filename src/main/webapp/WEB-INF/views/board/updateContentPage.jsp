@@ -3,6 +3,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>        
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -45,13 +47,23 @@
 				return;
 			}
 		}
-
 		function cmaTextareaSize(obj, bsize) { // 객체명, 기본사이즈
 			var sTextarea = document.getElementById(obj);
 			var csize = (sTextarea.scrollHeight >= bsize) ? sTextarea.scrollHeight + "px" : bsize + "px";
 			sTextarea.style.height = bsize + "px";
 			sTextarea.style.height = csize;
 		}
+		
+		var fileNoArry = new Array();
+ 		var fileNameArry = new Array();
+ 		function fn_del(value, name){
+ 			
+ 			fileNoArry.push(value);
+ 			fileNameArry.push(name);
+ 			$("#fileNoDel").attr("value", fileNoArry);
+ 			$("#fileNameDel").attr("value", fileNameArry);
+ 		}
+ 		
 	</script>    
 <body>
 <section class="container-fluid">
@@ -104,6 +116,18 @@
 								</div>
 							</div>
 							
+						<div class="row mt-2">
+							<span>파일 목록</span>
+							<div class="col">
+								<c:forEach items="${file }" var="file" varStatus="var">
+									<div class="form-group" style="border: 1px solid #dbdbdb;">
+										<a href="#" onclick="return false;">${file.org_file_name}</a>(${file.file_size}kb)
+										<button id="fileDel" onclick="fn_del('${file.file_no}','FILE_NO_${var.index}');" type="button" class="btn btn-dark">삭제</button><br>
+									</div>
+								</c:forEach>
+							</div>
+						</div> 
+							
 							<div class="row mt-2">
 								<div class="col"></div>
 								<div class="col"></div>
@@ -115,7 +139,8 @@
 						</div>
 						
 						<input type="hidden" name="board_no" value="${data.boardVo.board_no }">
-						
+						<input type="hidden" id="fileNoDel" name="fileNoDel[]" value=""> 
+						<input type="hidden" id="fileNameDel" name="fileNameDel[]" value=""> 
 					</form:form>
                 </div>
 

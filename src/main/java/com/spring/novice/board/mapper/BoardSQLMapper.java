@@ -63,4 +63,11 @@ public interface BoardSQLMapper {
 	/* 게시글 첨부파일 전체 삭제 */
 	public void deleteAllFile(int board_no);
 	
+	/* 게시글 첨부 파일 수정 */	
+	public void updateFile(int file_no);
+	
+	/* 게시글 파일 정보 불러오기*/
+	public ArrayList<FileVo> getFileByNo(int board_no);
+	
+	
 }

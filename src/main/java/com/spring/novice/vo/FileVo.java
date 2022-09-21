@@ -10,13 +10,14 @@ public class FileVo {
 	private String stored_file_name;
 	private int file_size;
 	private Date upload_write_date;
+	private String file_del;
 
 	public FileVo() {
 		super();
 	}
 
 	public FileVo(int file_no, int board_no, String org_file_name, String stored_file_name, int file_size,
-			Date upload_write_date) {
+			Date upload_write_date, String file_del) {
 		super();
 		this.file_no = file_no;
 		this.board_no = board_no;
@@ -24,6 +25,7 @@ public class FileVo {
 		this.stored_file_name = stored_file_name;
 		this.file_size = file_size;
 		this.upload_write_date = upload_write_date;
+		this.file_del = file_del;
 	}
 
 	public int getFile_no() {
@@ -74,11 +76,19 @@ public class FileVo {
 		this.upload_write_date = upload_write_date;
 	}
 
+	public String getFile_del() {
+		return file_del;
+	}
+
+	public void setFile_del(String file_del) {
+		this.file_del = file_del;
+	}
+
 	@Override
 	public String toString() {
 		return "FileVo [file_no=" + file_no + ", board_no=" + board_no + ", org_file_name=" + org_file_name
 				+ ", stored_file_name=" + stored_file_name + ", file_size=" + file_size + ", upload_write_date="
-				+ upload_write_date + "]";
+				+ upload_write_date + ", file_del = " + file_del + "]";
 	}
 
 }

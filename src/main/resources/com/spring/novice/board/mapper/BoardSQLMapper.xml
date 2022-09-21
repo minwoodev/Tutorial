@@ -80,20 +80,29 @@
 			#{org_file_name},
 			#{stored_file_name},
 			#{file_size},
-			SYSDATE
+			SYSDATE,
+			'N'
 		)
 	</insert>
 	
 	<select id="selectFileList" resultType="com.spring.novice.vo.FileVo">
-		SELECT * FROM novice_file WHERE board_no = #{board_no}
+		SELECT * FROM novice_file WHERE board_no = #{board_no} AND file_del = 'N'
 	</select>
 	
 	<select id="selectFileInfo" parameterType="HashMap" resultType="HashMap">
-		SELECT org_file_name, stored_file_name FROM novice_file WHERE file_no = #{file_no}
+		SELECT org_file_name, stored_file_name, upload_write_date FROM novice_file WHERE file_no = #{file_no}
 	</select>
 	
 	<delete id="deleteAllFile">
 		DELETE FROM novice_file WHERE board_no = #{board_no}
 	</delete>
+	
+	<update id="updateFile">
+		UPDATE novice_file SET file_del = 'Y' WHERE file_no = #{file_no}
+	</update>
+	
+	<select id="getFileByNo" resultType="com.spring.novice.vo.FileVo">
+		SELECT * FROM novice_file WHERE board_no = #{board_no}
+	</select>
 	
 </mapper>
