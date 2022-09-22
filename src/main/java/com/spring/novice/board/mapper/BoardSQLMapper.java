@@ -94,7 +94,4 @@ public interface BoardSQLMapper {
 	/* 내가 좋아요 했는지 여부 */
 	public int getMyLikeCount(BoardLikeVo param);
 	
-	
-	
-	
 }

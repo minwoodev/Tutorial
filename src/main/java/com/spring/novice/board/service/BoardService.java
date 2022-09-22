@@ -13,6 +13,7 @@ import com.spring.novice.board.mapper.CommentSQLMapper;
 import com.spring.novice.user.mapper.UserSQLMapper;
 import com.spring.novice.vo.BoardLikeVo;
 import com.spring.novice.vo.BoardVo;
+import com.spring.novice.vo.CommentLikeVo;
 import com.spring.novice.vo.FileVo;
 import com.spring.novice.vo.ReadPageVo;
 import com.spring.novice.vo.UserVo;
@@ -104,7 +105,7 @@ public class BoardService {
 
 		BoardVo boardVo = boardSQLMapper.getBoardByNo(board_no);
 		UserVo userVo = userSQLMapper.getUserByNo(boardVo.getUser_no());
-
+		
 		map.put("userVo", userVo);
 		map.put("boardVo", boardVo);
 

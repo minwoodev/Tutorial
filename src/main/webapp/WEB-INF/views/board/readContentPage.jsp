@@ -127,6 +127,7 @@
 								<th scope="col">댓글내용</th>
 								<th scope="col">댓글작성자</th>
 								<th scope="col">작성일</th>
+								<th scope="col">좋아요수</th>
 								<th scope="col">삭제</th>							
 							</tr>
 						</thead>
@@ -138,15 +139,22 @@
 									<th class="text-center">${date.commentVo.comment_content }</th>
 									<th class="text-center">${date.userVo.user_nickname }</th>
 									<th class="text-center"><fmt:formatDate value="${date.commentVo.comment_write_date }" pattern="yyyy년MM월dd일 HH시 mm분 ss초" /></th>
-									<c:if test="${sessionUser.user_no == date.commentVo.user_no }">
-										<th><a href="./deleteCommentContentProcess?comment_no=${date.commentVo.comment_no }
-																	&board_no=${date.commentVo.board_no} " type="button" class="btn btn-outline-primary">댓글삭제
-																</a>
-											<a href="javascript:void(window.open('http://localhost:8181/board/updateCommentContentPage?comment_no=${date.commentVo.comment_no }', 
-											'댓글수정페이지','location=no, directories=no, resizable=no, status=no, toolbar=no, menubar=no, width=1024, height=1024'))" 
-											type="button" class="btn btn-outline-primary">댓글수정</a>
-										</th>
-									</c:if>
+									<th class="text-center">${date.totalCommentLikeCount }</th>
+									<c:choose>
+										<c:when test="${sessionUser.user_no == date.commentVo.user_no }">
+											<th><a href="./deleteCommentContentProcess?comment_no=${date.commentVo.comment_no }
+																		&board_no=${date.commentVo.board_no} " type="button" class="btn btn-outline-primary">댓글삭제
+																	</a>
+												<a href="javascript:void(window.open('http://localhost:8181/board/updateCommentContentPage?comment_no=${date.commentVo.comment_no }', 
+												'댓글수정페이지','location=no, directories=no, resizable=no, status=no, toolbar=no, menubar=no, width=1024, height=1024'))" 
+												type="button" class="btn btn-outline-primary">댓글수정</a>
+												<a href="../board/commentLikeProcess?board_no=${date.commentVo.board_no }&comment_no=${date.commentVo.comment_no}" type="button" class="btn btn-outline-primary">댓글 좋아요</a>
+											</th>
+										</c:when>	
+										<c:otherwise>
+											<th><a href="../board/commentLikeProcess?board_no=${date.commentVo.board_no }&comment_no=${date.commentVo.comment_no}" type="button" class="btn btn-outline-primary">댓글 좋아요</a></th>
+										</c:otherwise>
+									</c:choose>
 								</tr>
 							</c:forEach>
 						</tbody>	

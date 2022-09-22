@@ -11,9 +11,11 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.spring.novice.board.service.BoardService;
 import com.spring.novice.board.service.CommentService;
+import com.spring.novice.vo.CommentLikeVo;
 import com.spring.novice.vo.CommentVo;
 import com.spring.novice.vo.UserVo;
 
@@ -82,6 +84,19 @@ public class CommentController {
 		commentService.deleteComment(comment_no);
 		
 		return "redirect:./readContentPage??board_no=" + board_no;
+	}
+	
+	@RequestMapping("commentLikeProcess")
+	public String commentLikeProcess(@RequestParam(value="board_no", defaultValue = "1") int board_no, CommentLikeVo param, HttpSession session) {
+
+		// 행위자 정보는 세션에서 꼭 뽑아오자...
+		UserVo sessionUser = (UserVo) session.getAttribute("sessionUser");
+		int userNo = sessionUser.getUser_no();
+		param.setUser_no(userNo);
+
+		commentService.doCommentLike(param);
+
+		return "redirect:./readContentPage?board_no=" + board_no;
 	}
 
 }
