@@ -9,7 +9,38 @@
 	</select>
 	
 	<select id="getBoardList" resultType="com.spring.novice.vo.BoardVo">
-		SELECT * FROM novice_board ORDER BY board_no DESC
+		SELECT t2.* FROM (
+			SELECT t1.* , ROWNUM AS rnum FROM (			
+				SELECT nb.* FROM novice_board nb , novice_user nu 
+				WHERE nb.user_no = nu.user_no ORDER BY nb.board_no DESC
+			) t1
+		) t2
+		
+		<![CDATA[ 
+		WHERE t2.rnum >= (#{pageNum} - 1) * 10 + 1 
+		AND t2.rnum <= #{pageNum} * 10				
+		]]>
+		
+	</select>
+	
+	<select id="getBoardCount" resultType="int">
+		SELECT COUNT(*) 
+		FROM novice_board fb , novice_user fm
+		WHERE fb.user_no = fm.user_no
+		<if test="category != null">
+			<choose>
+				<when test="category == 'title'">
+					AND fb.board_title LIKE '%' || #{keyword} || '%'
+				</when>	
+				<when test="category =='content'">
+					AND fb.board_content LIKE '%' || #{keyword} || '%'
+				</when>
+				<when test="category =='nick'">
+					AND fm.user_nickname LIKE '%' || #{keyword} || '%'
+				</when>		
+			</choose>
+		</if> 
+		
 	</select>
 	
 	<insert id="insertBoard">
@@ -108,6 +139,11 @@
 				WHERE nb.user_no = nu.user_no AND nb.board_title LIKE '%' || #{title} || '%' ORDER BY nb.board_no DESC
 			) t1
 		) t2
+		
+		<![CDATA[ 
+		WHERE t2.rnum >= (#{pageNum} - 1) * 10 + 1 
+		AND t2.rnum <= #{pageNum} * 10				
+		]]>
 	</select>
 	
 	<select id="selectByContent" resultType="com.spring.novice.vo.BoardVo">
@@ -117,6 +153,11 @@
 				WHERE nb.user_no = nu.user_no AND nb.board_content  LIKE '%' || #{content} || '%' ORDER BY nb.board_no DESC
 			) t1
 		) t2
+		
+		<![CDATA[ 
+		WHERE t2.rnum >= (#{pageNum} - 1) * 10 + 1 
+		AND t2.rnum <= #{pageNum} * 10				
+		]]>
 	</select>
 	
 	<select id="selectByNickName" resultType="com.spring.novice.vo.BoardVo">
@@ -126,5 +167,10 @@
 				WHERE nb.user_no = nu.user_no AND nu.user_nickname LIKE '%' || #{user_nickname} || '%' ORDER BY nb.board_no DESC
 			) t1
 		) t2
+		
+		<![CDATA[ 
+		WHERE t2.rnum >= (#{pageNum} - 1) * 10 + 1 
+		AND t2.rnum <= #{pageNum} * 10				
+		]]>
 	</select>
 </mapper>

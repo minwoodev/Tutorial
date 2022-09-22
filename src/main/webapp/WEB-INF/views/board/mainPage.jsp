@@ -116,6 +116,57 @@
 					</table>
 				</div>
 				
+				<div class="row mt-3">
+					<div class="col-3"></div>
+					<div class="col-3"></div>
+					<div class="col d-grid">
+						<nav aria-label="...">
+							<ul class="pagination mb-0">
+								<c:choose>
+									<c:when test="${startPage <= 1 }">
+										<li class="page-item disabled">
+											<a class="page-link">&lt;</a>
+										</li>
+									</c:when>
+									<c:otherwise>
+										<li class="page-item">
+											<a class="page-link" href="./mainPage?pageNum=${startPage-1 }${additionalParam}">&lt;</a>
+										</li>
+									</c:otherwise>
+								</c:choose>
+								
+								<c:forEach begin="${startPage}" end="${endPage}" var="i">
+									<c:choose>
+										<c:when test="${currentPage == i}">
+											<li class="page-item active">
+												<a class="page-link" href="./mainPage?pageNum=${i}${additionalParam}">${i}</a>
+											</li>
+										</c:when>
+										<c:otherwise>
+											<li class="page-item">
+												<a class="page-link" href="./mainPage?pageNum=${i}${additionalParam}">${i}</a>
+											</li>
+										</c:otherwise>
+									</c:choose>
+								</c:forEach>
+								
+								 <c:choose>
+								 	<c:when test="${endPage >= totalPageCount}">
+								 		<li class="page-item disabled">
+								 			<a class="page-link">&gt;</a>
+								 		</li>
+								 	</c:when>
+								 	<c:otherwise>
+								 		<li class="page-item">
+								 			<a class="page-link" href="./mainPage?pageNum=${endPage+1 }${additionalParam}">&gt;</a>
+								 		</li>
+								 	</c:otherwise>
+								 </c:choose>
+							</ul>
+						</nav>
+					</div>
+				</div>
+		
 				<div class="row-3">
 						<div align="right">
 							<div class="col-2 d-grid">

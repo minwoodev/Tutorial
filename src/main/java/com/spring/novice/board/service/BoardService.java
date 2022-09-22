@@ -30,25 +30,25 @@ public class BoardService {
 	@Autowired
 	CommentSQLMapper commentSQLMapper;
 
-	public ArrayList<HashMap<String, Object>> getBoardList(String category, String keyword) {
+	public ArrayList<HashMap<String, Object>> getBoardList(String category, String keyword, int pageNum) {
 		ArrayList<HashMap<String, Object>> dataList = new ArrayList<HashMap<String, Object>>();
 
-		ArrayList<BoardVo> boardVoList = boardSQLMapper.getBoardList();
+		ArrayList<BoardVo> boardVoList = boardSQLMapper.getBoardList(pageNum);
 
 		if (category != null || keyword != null) {
 			switch (category) {
-				case "title": 
-					boardVoList = boardSQLMapper.selectByTitle(keyword);
-					break;
-				case "content":
-					boardVoList = boardSQLMapper.selectByContent(keyword);
-					break;
-				case "nick":
-					boardVoList = boardSQLMapper.selectByNickName(keyword);
-					break;
+			case "title":
+				boardVoList = boardSQLMapper.selectByTitle(keyword, pageNum);
+				break;
+			case "content":
+				boardVoList = boardSQLMapper.selectByContent(keyword, pageNum);
+				break;
+			case "nick":
+				boardVoList = boardSQLMapper.selectByNickName(keyword, pageNum);
+				break;
 			}
 		}
-		
+
 		for (BoardVo boardVo : boardVoList) {
 
 			int userNo = boardVo.getUser_no();
@@ -80,6 +80,11 @@ public class BoardService {
 
 	}
 
+	public int getBoardCount(String category, String keyword) {
+
+		return boardSQLMapper.getBoardCount(category, keyword);
+	}
+
 	public HashMap<String, Object> getBoard(int board_no) {
 
 		HashMap<String, Object> map = new HashMap<String, Object>();
@@ -100,10 +105,10 @@ public class BoardService {
 			boardSQLMapper.updateFile(Integer.parseInt(file[i]));
 		}
 
-		for (int i = 0; i < fileVoList.size(); i ++) {
+		for (int i = 0; i < fileVoList.size(); i++) {
 			boardSQLMapper.insertFile(fileVoList.get(i));
 		}
-		
+
 	}
 
 	public void updateFile(int file_no) {
