@@ -43,12 +43,11 @@ public class BoardController {
 	@Autowired
 	CommentService commentService;
 
-	@RequestMapping(value="mainPage", method = RequestMethod.GET)
-	public String mainPage(Model model, String category, String keyword,
-			@RequestParam(value = "pageNum", defaultValue = "1") int pageNum) {
+	@RequestMapping(value = "mainPage", method = RequestMethod.GET)
+	public String mainPage(Model model, String category, String keyword, @RequestParam(value = "pageNum", defaultValue = "1") int pageNum) {
 
-		ArrayList<HashMap<String, Object>> dataList = boardService.getBoardList(category, keyword, pageNum);
-
+		ArrayList<HashMap<String,Object>> dataList = boardService.getBoardList(category, keyword, pageNum);
+		
 		int count = boardService.getBoardCount(category, keyword);
 
 		int totalPageCount = (int) Math.ceil(count / 10.0);

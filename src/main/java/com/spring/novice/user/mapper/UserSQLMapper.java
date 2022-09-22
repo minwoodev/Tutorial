@@ -17,7 +17,7 @@ public interface UserSQLMapper {
 	public int selectByPhoneNumber(String user_phone);
 
 	/* 이메일 중복확인 쿼리 */
-	public int selectByEmail(String user_email);
+	public int selectByEmail(String user_eamil);
 	
 	/* 로그인 쿼리*/
 	public UserVo getUserByIdAndPw(UserVo param);

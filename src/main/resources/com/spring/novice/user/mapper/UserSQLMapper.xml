@@ -32,7 +32,7 @@
 	</select>
 	
 	<select id="selectByEmail" resultType="int">
-		SELECT count(*) FROM novice_user WHERE user_email = #{user_email}
+		SELECT count(*) FROM novice_user WHERE user_eamil = #{user_eamil}
 	</select>
 	
 	<select id="getUserByIdAndPw" resultType="com.spring.novice.vo.UserVo">
