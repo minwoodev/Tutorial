@@ -1,6 +1,7 @@
 package com.spring.novice.board.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -54,6 +55,18 @@ public class BoardService {
 			UserVo userVo = userSQLMapper.getUserByNo(userNo);
 
 			HashMap<String, Object> map = new HashMap<String, Object>();
+
+			// 현재 글이...지금시간 -3 시간 보다 클때...
+			Date writeDate = boardVo.getBoard_write_date();
+			long writeTime = writeDate.getTime();
+
+			long currentTime = System.currentTimeMillis();
+			long targetTime = currentTime - 1000 * 60 * 60 * 3;
+
+			if (writeTime > targetTime) {
+				map.put("newKeyword", true);
+			}
+
 			map.put("boardVo", boardVo);
 			map.put("userVo", userVo);
 			map.put("totalLikeCount", totalLikeCount);
@@ -63,6 +76,11 @@ public class BoardService {
 		}
 
 		return dataList;
+	}
+
+	public int getBoardCount(String category, String keyword) {
+
+		return boardSQLMapper.getBoardCount(category, keyword);
 	}
 
 	public void insertBoard(BoardVo param, ArrayList<FileVo> fileVoList) {
@@ -78,11 +96,6 @@ public class BoardService {
 			boardSQLMapper.insertFile(fileVo);
 		}
 
-	}
-
-	public int getBoardCount(String category, String keyword) {
-
-		return boardSQLMapper.getBoardCount(category, keyword);
 	}
 
 	public HashMap<String, Object> getBoard(int board_no) {

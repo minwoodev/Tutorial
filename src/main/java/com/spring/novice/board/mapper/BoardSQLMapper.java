@@ -95,4 +95,6 @@ public interface BoardSQLMapper {
 	public int getMyLikeCount(BoardLikeVo param);
 	
 	
+	
+	
 }

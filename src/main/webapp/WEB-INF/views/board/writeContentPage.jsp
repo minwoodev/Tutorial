@@ -120,9 +120,8 @@
 					<div class="row mt-2">
 						<div class="col">
 							<div align="left">
-								<input type="radio" name="board_secret" value="Y"
-									checked="checked">비밀글로 설정 <input type="radio"
-									name="board_secret" value="N">공개글로 설정
+								<input type="radio" name="board_secret" value="Y">비밀글로 설정 
+								<input type="radio" name="board_secret" value="N" checked="checked">공개글로 설정
 							</div>
 						</div>
 					</div>
