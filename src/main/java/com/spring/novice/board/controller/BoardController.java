@@ -27,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.spring.novice.board.service.BoardService;
 import com.spring.novice.board.service.CommentService;
+import com.spring.novice.vo.BoardLikeVo;
 import com.spring.novice.vo.BoardVo;
 import com.spring.novice.vo.FileVo;
 import com.spring.novice.vo.ReadPageVo;
@@ -44,10 +45,11 @@ public class BoardController {
 	CommentService commentService;
 
 	@RequestMapping(value = "mainPage", method = RequestMethod.GET)
-	public String mainPage(Model model, String category, String keyword, @RequestParam(value = "pageNum", defaultValue = "1") int pageNum) {
+	public String mainPage(Model model, String category, String keyword,
+			@RequestParam(value = "pageNum", defaultValue = "1") int pageNum) {
 
-		ArrayList<HashMap<String,Object>> dataList = boardService.getBoardList(category, keyword, pageNum);
-		
+		ArrayList<HashMap<String, Object>> dataList = boardService.getBoardList(category, keyword, pageNum);
+
 		int count = boardService.getBoardCount(category, keyword);
 
 		int totalPageCount = (int) Math.ceil(count / 10.0);
@@ -160,7 +162,7 @@ public class BoardController {
 
 	@RequestMapping("readContentPage")
 	public String readContentPage(@RequestParam(value = "board_no", defaultValue = "0") int no, Model model,
-			HttpServletRequest request) {
+			HttpServletRequest request, HttpSession session) {
 		ArrayList<ReadPageVo> readPageVo = boardService.getReadPageList(no);
 
 		if (boardService.isSelectReadBoardNo(no)) {
@@ -201,6 +203,21 @@ public class BoardController {
 		ArrayList<HashMap<String, Object>> dataList = commentService.getCommentList(no);
 
 		ArrayList<HashMap<String, Object>> fileList = boardService.selectFileList(no);
+
+		int totalLikeCount = boardService.getTotalLikeCount(no);
+		model.addAttribute("totalLikeCount", totalLikeCount);
+
+		UserVo sessionUser = (UserVo) session.getAttribute("sessionUser");
+		if (sessionUser != null) {
+			// 로그인을 했을때...
+			int userNo = sessionUser.getUser_no();
+			BoardLikeVo boardLikeVo = new BoardLikeVo();
+			boardLikeVo.setUser_no(userNo);
+			boardLikeVo.setBoard_no(no);
+
+			int myLikeCount = boardService.getMyLikeCount(boardLikeVo);
+			model.addAttribute("myLikeCount", myLikeCount);
+		}
 
 		model.addAttribute("data", map);
 		model.addAttribute("dataList", dataList);
@@ -315,4 +332,18 @@ public class BoardController {
 		response.getOutputStream().flush();
 		response.getOutputStream().close();
 	}
+
+	@RequestMapping("likeProcess")
+	public String likeProcess(BoardLikeVo param, HttpSession session) {
+
+		// 행위자 정보는 세션에서 꼭 뽑아오자...
+		UserVo sessionUser = (UserVo) session.getAttribute("sessionUser");
+		int userNo = sessionUser.getUser_no();
+		param.setUser_no(userNo);
+
+		boardService.doLike(param);
+
+		return "redirect:./readContentPage?board_no=" + param.getBoard_no();
+	}
+
 }

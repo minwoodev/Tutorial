@@ -80,6 +80,13 @@
 		                       </td>
 		                    </tr>
 		
+							<tr>
+		                       <th scope="row" width=100px align="center" style="border-right:1.5px solid steelblue">좋아요수</th>
+		                       <td width=100px align="center"> 
+		                       ${totalLikeCount } 
+		                       </td>
+		                    </tr>		
+							
 		                    <tr>
 		                       <th scope="row" width=100px align="center" style="border-right:1.5px solid steelblue">작성일시</th>
 		                       <td width=100px align="center"> 
@@ -153,6 +160,17 @@
                     	'댓글작성페이지','location=no, directories=no, resizable=no, status=no, toolbar=no, menubar=no, width=1024, height=1024'))" 
                     	type="button" class="btn btn-outline-primary">댓글작성
                     </a>
+                    
+					<c:choose>
+						<c:when test="${myLikeCount } > 0 ">
+							<a href="../board/likeProcess?board_no=${data.boardVo.board_no }" type="button" class="btn btn-outline-primary">좋아요 취소</a>
+						</c:when>
+						<c:otherwise>
+							<a href="../board/likeProcess?board_no=${data.boardVo.board_no }" type="button" class="btn btn-outline-primary">좋아요</a>
+						</c:otherwise>
+					</c:choose>
+					
+                    
 					<c:if test="${sessionUser.user_no == data.boardVo.user_no}">
                     	<a href="./deleteContentProcess?board_no=${data.boardVo.board_no }" class="btn btn-outline-primary" type="button">글삭제</a>
                     	<a href="./updateContentPage?board_no=${data.boardVo.board_no }" class="btn btn-outline-primary" type="button">글수정</a>	                    	

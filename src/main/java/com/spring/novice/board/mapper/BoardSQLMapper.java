@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.spring.novice.vo.BoardLikeVo;
 import com.spring.novice.vo.BoardVo;
 import com.spring.novice.vo.FileVo;
 import com.spring.novice.vo.ReadPageVo;
@@ -80,4 +81,18 @@ public interface BoardSQLMapper {
 
 	/* 게시글 총 갯수 */
 	public int getBoardCount(@Param("category") String category, @Param("keyword") String keyword);
+	
+	/* 게시글 좋아요 */
+	public void insertLike(BoardLikeVo param);
+	
+	/* 게시글 좋아요 취소 */
+	public void deleteLike(BoardLikeVo param);
+	
+	/* 좋아요 전체 갯수*/
+	public int getTotalLikeCount(int board_no);
+	
+	/* 내가 좋아요 했는지 여부 */
+	public int getMyLikeCount(BoardLikeVo param);
+	
+	
 }

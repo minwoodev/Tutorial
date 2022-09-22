@@ -173,4 +173,32 @@
 		AND t2.rnum <= #{pageNum} * 10				
 		]]>
 	</select>
+	
+	<insert id="insertLike">
+		INSERT INTO novice_board_like VALUES(
+			novice_board_like_seq.nextval,
+			#{board_no},
+			#{user_no},
+			SYSDATE
+		)		
+	</insert>
+	
+	<delete id="deleteLike">
+		DELETE 
+		FROM novice_board_like 
+		WHERE user_no = #{user_no} 
+		AND board_no = #{board_no}
+	</delete>	
+	
+	<select id="getTotalLikeCount" resultType="int">
+		SELECT COUNT(*) FROM novice_board_like WHERE board_no = #{board_no}
+	</select>
+	
+	<select id="getMyLikeCount" resultType="int">
+		SELECT COUNT(*) 
+		FROM novice_board_like 
+		WHERE board_no = #{board_no} 
+		AND user_no = #{user_no}
+	</select>
+	
 </mapper>

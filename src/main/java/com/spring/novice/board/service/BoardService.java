@@ -1,9 +1,6 @@
 package com.spring.novice.board.service;
 
-import java.io.File;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -13,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.spring.novice.board.mapper.BoardSQLMapper;
 import com.spring.novice.board.mapper.CommentSQLMapper;
 import com.spring.novice.user.mapper.UserSQLMapper;
+import com.spring.novice.vo.BoardLikeVo;
 import com.spring.novice.vo.BoardVo;
 import com.spring.novice.vo.FileVo;
 import com.spring.novice.vo.ReadPageVo;
@@ -52,11 +50,13 @@ public class BoardService {
 		for (BoardVo boardVo : boardVoList) {
 
 			int userNo = boardVo.getUser_no();
+			int totalLikeCount = boardSQLMapper.getTotalLikeCount(boardVo.getBoard_no());
 			UserVo userVo = userSQLMapper.getUserByNo(userNo);
 
 			HashMap<String, Object> map = new HashMap<String, Object>();
 			map.put("boardVo", boardVo);
 			map.put("userVo", userVo);
+			map.put("totalLikeCount", totalLikeCount);
 
 			dataList.add(map);
 
@@ -168,5 +168,24 @@ public class BoardService {
 		Map<String, Object> list = boardSQLMapper.selectFileInfo(map);
 
 		return list;
+	}
+
+	public void doLike(BoardLikeVo vo) {
+
+		int count = boardSQLMapper.getMyLikeCount(vo);
+
+		if (count > 0) {
+			boardSQLMapper.deleteLike(vo);
+		} else {
+			boardSQLMapper.insertLike(vo);
+		}
+	}
+
+	public int getTotalLikeCount(int boardNo) {
+		return boardSQLMapper.getTotalLikeCount(boardNo);
+	}
+
+	public int getMyLikeCount(BoardLikeVo vo) {
+		return boardSQLMapper.getMyLikeCount(vo);
 	}
 }

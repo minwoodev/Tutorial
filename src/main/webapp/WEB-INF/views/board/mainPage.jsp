@@ -68,6 +68,7 @@
 								<th scope="col">작성자</th>
 								<th scope="col">비밀글</th>
 								<th scope="col">작성일</th>
+								<th scope="col">좋아요</th>
 								<th scope="col">조회수</th>
 							</tr>
 						</thead>
@@ -107,6 +108,7 @@
 									<td class="text-center">${data.userVo.user_nickname }</td>	
 									<td class="text-center">${data.boardVo.board_secret }</td>
 									<td class="text-center"><fmt:formatDate value="${data.boardVo.board_write_date }" pattern="yyyy:MM:dd: HH:mm:ss" /></td>
+									<td class="text-center">${data.totalLikeCount }</td>
 									<td class="text-center">${data.boardVo.board_readcount }</td>
 									
 								</tr>
