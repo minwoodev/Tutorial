@@ -45,11 +45,13 @@ public class CommentService {
 
 			int totalCommentLikeCount = commentSQLMapper.getTotalCommentLikeCount(commentVo.getComment_no());
 			int myCommentLikeCount = commentSQLMapper.getMyCommentLikeCount(commentVo.getComment_no(), commentVo.getUser_no());
+			int totalCommentCount = commentSQLMapper.getTotalCommentCount(board_no); 
 			
 			HashMap<String, Object> map = new HashMap<String, Object>();
 
 			map.put("totalCommentLikeCount", totalCommentLikeCount);
 			map.put("myCommentLikeCount", myCommentLikeCount);
+			map.put("totalCommentCount", totalCommentCount);
 			map.put("boardVo", boardVo);
 			map.put("userVo", userVo);
 			map.put("commentVo", commentVo);

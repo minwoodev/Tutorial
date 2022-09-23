@@ -39,5 +39,8 @@ public interface CommentSQLMapper {
 	/* 댓글 좋아요 했는지 여부 */
 	public int getMyCommentLikeCount(@Param("comment_no") int comment_no, @Param("user_no") int user_no);
 	
+	/* 댓글 총 갯수*/
+	public int getTotalCommentCount(int board_no);
+	
 
 }

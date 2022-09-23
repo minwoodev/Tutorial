@@ -53,4 +53,8 @@
 	<select id="getMyCommentLikeCount" resultType="int">
 		SELECT count(*) FROM novice_comment_like WHERE comment_no = #{comment_no} AND user_no = #{user_no} 
 	</select>
+	
+	<select id="getTotalCommentCount" resultType="int">
+		SELECT count(*) FROM novice_comment WHERE board_no = #{board_no}
+	</select>
 </mapper>

@@ -53,6 +53,7 @@ public class BoardService {
 
 			int userNo = boardVo.getUser_no();
 			int totalLikeCount = boardSQLMapper.getTotalLikeCount(boardVo.getBoard_no());
+			int totalCommentCount = commentSQLMapper.getTotalCommentCount(boardVo.getBoard_no());
 			UserVo userVo = userSQLMapper.getUserByNo(userNo);
 
 			HashMap<String, Object> map = new HashMap<String, Object>();
@@ -71,6 +72,7 @@ public class BoardService {
 			map.put("boardVo", boardVo);
 			map.put("userVo", userVo);
 			map.put("totalLikeCount", totalLikeCount);
+			map.put("totalCommentCount", totalCommentCount);
 
 			dataList.add(map);
 

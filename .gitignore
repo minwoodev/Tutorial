@@ -4,3 +4,7 @@ target/
 .project
 .springBeans
 src/test/
+.war
+.jar
+.zip
+.7z
