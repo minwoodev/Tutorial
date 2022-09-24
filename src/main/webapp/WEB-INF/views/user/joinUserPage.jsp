@@ -109,6 +109,31 @@
 										style="height:36px;">중복확인</button></div>
 								<div class="col my-auto" id="alertEmail"><form:errors path="user_email" id="error_message" /></div>									
 							</div>
+							
+							<div class="row mt-3">
+								<div class="col fs-5">
+									<select class="form-select" name="question_no" id="userQuestion" aria-label="Default select example">
+										<c:forEach items="${data.list }" var="question">
+											<option value="${question.question_no }">
+												${question.question_content }</option>
+										</c:forEach>
+									</select>
+								</div>
+							</div>
+
+							<div class="row mt-3">
+								<div class="col fs-5"><form:input class="form-control" id="userFindAnswer" path="user_findAnswer"
+										type="text" placeholder="비밀번호 찾기 정답을 입력해주세요" aria-label="default input example" />
+								</div>
+								<div class="col my-auto"><form:errors path="user_findAnswer" id="error_message" /></div>
+							</div>
+							
+							<div class="row mt-3">
+								<div class="inputTitle"></div>
+								<div class="col-7 bi bi-exclamation-square-fill orange">
+									비밀번호 찾기 답변은 고객님의 비밀번호 분실시 이용됩니다. 신중하게 기입해주시기 바랍니다.
+								</div>
+							</div>							
 
 							<div class="row mt-1">
 								<div class="col"></div>

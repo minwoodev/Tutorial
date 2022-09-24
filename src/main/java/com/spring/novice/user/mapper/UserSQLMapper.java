@@ -1,6 +1,9 @@
 package com.spring.novice.user.mapper;
 
+import java.util.ArrayList;
+
 import com.spring.novice.vo.MailAuthVo;
+import com.spring.novice.vo.QuestionVo;
 import com.spring.novice.vo.UserVo;
 
 public interface UserSQLMapper {
@@ -31,4 +34,6 @@ public interface UserSQLMapper {
 	public void insertMailAuth(MailAuthVo vo);
 	public void updateMailAuthComplete(String authKey);
 	
+	/* 비밀번호 찾기 힌트 */
+	public ArrayList<QuestionVo> getJoinQuestionList();
 }

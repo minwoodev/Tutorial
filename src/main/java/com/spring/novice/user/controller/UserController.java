@@ -1,5 +1,6 @@
 package com.spring.novice.user.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
@@ -8,6 +9,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.spring.novice.user.service.UserService;
+import com.spring.novice.vo.QuestionVo;
 import com.spring.novice.vo.UserVo;
 
 @Controller
@@ -31,19 +34,37 @@ public class UserController {
 	}
 
 	@RequestMapping("joinUserPage")
-	public String joinUserPage(@ModelAttribute("userVo") UserVo param,
+	public String joinUserPage(Model model, @ModelAttribute("userVo") UserVo param,
 			@RequestParam(value = "agree", defaultValue = "false") boolean agree) {
 		if (!agree) {
 			return "user/userAgree";
 		} else {
+			
+			HashMap<String, Object> data = new HashMap<String, Object>();
+			
+			ArrayList<QuestionVo> list = userService.getJoinQuestionList();
+			
+			data.put("list", list);
+			
+			model.addAttribute("data", data);
+			
 			return "user/joinUserPage";
 		}
 	}
 
 	@RequestMapping("insertUserProcess")
-	public String insertUserProcess(@Valid UserVo param, BindingResult result) {
+	public String insertUserProcess(Model model, @Valid UserVo param, BindingResult result) {
 
 		if (result.hasErrors()) {
+			
+			HashMap<String, Object> data = new HashMap<String, Object>();
+			
+			ArrayList<QuestionVo> list = userService.getJoinQuestionList();
+			
+			data.put("list", list);
+			
+			model.addAttribute("data", data);
+			
 			return "/user/joinUserPage";
 		}
 

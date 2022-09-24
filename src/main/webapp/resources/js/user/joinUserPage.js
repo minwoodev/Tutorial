@@ -144,6 +144,9 @@ window.addEventListener("DOMContentLoaded", function () {
 	});
 	
 	$("#joinButton").click(function () {
+		
+		var answer = $("userFindAnswer").val();
+		
 		if ($("#alertId").text() != "✔  사용 가능한 아이디입니다.") {
 			alert("아이디 중복 확인을 해주세요.");
 			return;

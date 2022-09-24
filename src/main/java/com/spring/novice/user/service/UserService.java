@@ -1,5 +1,6 @@
 package com.spring.novice.user.service;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import com.spring.novice.commons.MailSenderThread;
 import com.spring.novice.commons.MessageDigestUtil;
 import com.spring.novice.user.mapper.UserSQLMapper;
 import com.spring.novice.vo.MailAuthVo;
+import com.spring.novice.vo.QuestionVo;
 import com.spring.novice.vo.UserVo;
 
 @Service
@@ -83,4 +85,11 @@ public class UserService {
 	public void authMail(String key) {
 		userSQLMapper.updateMailAuthComplete(key);
 	}
+	
+	public ArrayList<QuestionVo> getJoinQuestionList () {
+		
+		ArrayList<QuestionVo> questionList = userSQLMapper.getJoinQuestionList();
+		
+		return questionList;
+	} 
 }

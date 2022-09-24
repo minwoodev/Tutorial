@@ -11,12 +11,14 @@
 	<insert id="insertUser">
 		INSERT INTO novice_user VALUES(
 			#{user_no},
+			#{question_no},
 			#{user_id},
 			#{user_pw},
 			#{user_nickname},
 			#{user_gender},
 			#{user_phone},
 			#{user_email},
+			#{user_findAnswer},
 			#{user_birth},
 			SYSDATE,
 			'active'
@@ -61,4 +63,9 @@
 		UPDATE novice_mail_auth SET mailauth_complete = 'Y' , mailauth_date = SYSDATE
 		WHERE mailauth_key = #{authKey}
 	</update>
+	
+	<select id="getJoinQuestionList" resultType="com.spring.novice.vo.QuestionVo">
+		SELECT * FROM novice_find_question
+	</select>
+	
 </mapper>

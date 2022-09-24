@@ -68,6 +68,9 @@
 										<input type="checkbox" id="autoLoginBox" name="">자동로그인
 									</div>
 								</div>
+								<div class="row mt-2">
+									<a href="../user/searchID">아이디찾기</a>
+								</div>
 							</div>
 						</div>
 						
