@@ -21,7 +21,7 @@ import com.spring.novice.vo.UserVo;
 @RequestMapping("/user/*")
 
 public class UserController {
-	
+
 	@Autowired
 	UserService userService;
 
@@ -29,7 +29,7 @@ public class UserController {
 	public String userAgree() {
 		return "user/userAgree";
 	}
-	
+
 	@RequestMapping("joinUserPage")
 	public String joinUserPage(@ModelAttribute("userVo") UserVo param,
 			@RequestParam(value = "agree", defaultValue = "false") boolean agree) {
@@ -39,7 +39,7 @@ public class UserController {
 			return "user/joinUserPage";
 		}
 	}
-	
+
 	@RequestMapping("insertUserProcess")
 	public String insertUserProcess(@Valid UserVo param, BindingResult result) {
 
@@ -51,7 +51,7 @@ public class UserController {
 
 		return "user/joinUserCompletPage";
 	}
-	
+
 	@ResponseBody
 	@RequestMapping("checkId")
 	public HashMap<String, Object> checkId(String user_id) {
@@ -119,7 +119,7 @@ public class UserController {
 
 		return data;
 	}
-	
+
 	@RequestMapping("loginPage")
 	public String loginPage() {
 		return "user/loginPage";
@@ -151,5 +151,13 @@ public class UserController {
 
 		return "redirect:../board/mainPage";
 	}
-	
+
+	@RequestMapping("mailAuthProcess")
+	public String mailAuthProcess(String authKey) {
+
+		userService.authMail(authKey);
+
+		return "user/authMailProcessComplete";
+	}
+
 }

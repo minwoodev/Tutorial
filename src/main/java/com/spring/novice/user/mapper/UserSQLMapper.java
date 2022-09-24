@@ -1,9 +1,12 @@
 package com.spring.novice.user.mapper;
 
+import com.spring.novice.vo.MailAuthVo;
 import com.spring.novice.vo.UserVo;
 
 public interface UserSQLMapper {
 
+	public int createUserPk();
+	
 	/* 회원가입 테이블 */
 	public void insertUser(UserVo param);
 	
@@ -23,5 +26,9 @@ public interface UserSQLMapper {
 	public UserVo getUserByIdAndPw(UserVo param);
 	
 	public UserVo getUserByNo(int no);
+	
+	//메일 인증 T
+	public void insertMailAuth(MailAuthVo vo);
+	public void updateMailAuthComplete(String authKey);
 	
 }

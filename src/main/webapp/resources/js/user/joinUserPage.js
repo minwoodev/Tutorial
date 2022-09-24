@@ -146,15 +146,26 @@ window.addEventListener("DOMContentLoaded", function () {
 	$("#joinButton").click(function () {
 		if ($("#alertId").text() != "✔  사용 가능한 아이디입니다.") {
 			alert("아이디 중복 확인을 해주세요.");
-		} else if ($("alertNickName").text() != "✔  사용 가능한 닉네임입니다.") {
-			alert("닉네임 중복 확인을 해주세요.");
-		} else if ($("alertPhoneNumber").text() != "✔  사용 가능한 휴대폰번호입니다.") {
+			return;
+		} 
+		
+		if ($("#alertNickName").text() != "✔  사용 가능한 닉네임입니다.") {
+			alert("닉네임 중복확인을 해주세요");
+			return;
+		} 
+		
+		if ($("#alertPhoneNumber").text() != "✔  사용 가능한 휴대폰번호입니다.") {
 			alert("휴대폰번호 중복 확인을 해주세요.");
-		} else if ($("alertEmail").text() != "✔  사용 가능한 이메일주소입니다.") {
+			return;
+		} 
+		
+		if ($("#alertEmail").text() != "✔  사용 가능한 이메일주소입니다.") {
 			alert("이메일 중복 확인을 해주세요");
-		} else {
-			$("#insertForm").submit();
-		}
+			return;
+		} 
+		
+		$("#insertForm").submit();
+		alert("회원가입이 완료 되었습니다. 이메일 인증을 해주세요");
 	});
 	
 });

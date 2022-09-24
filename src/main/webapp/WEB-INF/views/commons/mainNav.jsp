@@ -11,6 +11,9 @@
 	<ul class="navbar-nav ms-auto mb-2 mb-lg-0">
 		<c:choose>
 			<c:when test="${!empty sessionUser }">
+			  <li class="nav-item">
+			  	<a class="nav-link" href="../board/mainPage">홈</a>
+			  </li>
 		      <li class="nav-item dropdown">
 		        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 		          ${sessionUser.user_nickname }

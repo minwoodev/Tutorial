@@ -4,9 +4,13 @@
 
 <mapper namespace="com.spring.novice.user.mapper.UserSQLMapper">	
 
+	<select id="createUserPk" resultType="int">
+		SELECT novice_user_seq.nextval FROM Dual
+	</select>
+
 	<insert id="insertUser">
 		INSERT INTO novice_user VALUES(
-			novice_user_seq.nextval,
+			#{user_no},
 			#{user_id},
 			#{user_pw},
 			#{user_nickname},
@@ -36,11 +40,25 @@
 	</select>
 	
 	<select id="getUserByIdAndPw" resultType="com.spring.novice.vo.UserVo">
-		SELECT * FROM novice_user WHERE user_id = #{user_id} AND user_pw = #{user_pw}
+		SELECT * FROM novice_user nu, novice_mail_auth nm WHERE nu.user_no = nm.user_no AND nu.user_id = #{user_id} AND nu.user_pw = #{user_pw} AND nm.mailauth_complete = 'Y'
 	</select>
 	
 	<select id="getUserByNo" resultType="com.spring.novice.vo.UserVo">
 		SELECT * FROM novice_user WHERE user_no = #{no}
 	</select>
 	
+	<insert id="insertMailAuth">
+		INSERT INTO novice_mail_auth VALUES(
+			novice_mail_auth_seq.nextval,
+			#{user_no},
+			#{mailauth_key},
+			'N',
+			SYSDATE
+		)
+	</insert>
+	
+	<update id="updateMailAuthComplete">
+		UPDATE novice_mail_auth SET mailauth_complete = 'Y' , mailauth_date = SYSDATE
+		WHERE mailauth_key = #{authKey}
+	</update>
 </mapper>
