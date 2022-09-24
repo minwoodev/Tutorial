@@ -39,15 +39,15 @@ public class UserController {
 		if (!agree) {
 			return "user/userAgree";
 		} else {
-			
+
 			HashMap<String, Object> data = new HashMap<String, Object>();
-			
+
 			ArrayList<QuestionVo> list = userService.getJoinQuestionList();
-			
+
 			data.put("list", list);
-			
+
 			model.addAttribute("data", data);
-			
+
 			return "user/joinUserPage";
 		}
 	}
@@ -56,15 +56,15 @@ public class UserController {
 	public String insertUserProcess(Model model, @Valid UserVo param, BindingResult result) {
 
 		if (result.hasErrors()) {
-			
+
 			HashMap<String, Object> data = new HashMap<String, Object>();
-			
+
 			ArrayList<QuestionVo> list = userService.getJoinQuestionList();
-			
+
 			data.put("list", list);
-			
+
 			model.addAttribute("data", data);
-			
+
 			return "/user/joinUserPage";
 		}
 
@@ -181,4 +181,48 @@ public class UserController {
 		return "user/authMailProcessComplete";
 	}
 
+	@RequestMapping("findUserInfoPage")
+	public String findUserInfoPage() {
+		return "user/findUserInfoPage";
+	}
+
+	@ResponseBody
+	@RequestMapping("getUserIdByNameAndEmail")
+	public HashMap<String, Object> getUserIdByNameAndEmail(UserVo vo) {
+
+		HashMap<String, Object> data = new HashMap<String, Object>();
+
+		HashMap<String, Object> userInfo = userService.getUserIdByNameAndEmail(vo);
+
+		if (userInfo == null) {
+			data.put("result", "fail");
+		} else {
+			data.put("result", "success");
+			data.put("userInfo", userInfo);
+		}
+
+		
+		
+		return data;
+	}
+
+	@ResponseBody
+	@RequestMapping("getUserQuestionById")
+	public HashMap<String, Object> getUserQuestionById(UserVo vo) {
+
+		HashMap<String, Object> data = new HashMap<String, Object>();
+
+		HashMap<String, Object> userInfo = userService.getUserQquestionById(vo);
+
+		if (userInfo == null) {
+			data.put("result", "fail");
+		} else {
+			data.put("result", "success");
+			data.put("userInfo", userInfo);
+		}
+		
+		System.out.println(data.get("userInfo").toString());
+
+		return data;
+	}
 }

@@ -1,6 +1,7 @@
 package com.spring.novice.user.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -92,4 +93,19 @@ public class UserService {
 		
 		return questionList;
 	} 
+	
+	public HashMap<String, Object> getUserIdByNameAndEmail(UserVo param) {
+		HashMap<String, Object> userInfo = userSQLMapper.getUserIdByNameAndEmail(param.getUser_nickname(), param.getUser_email());
+		
+		System.out.println("" + param.getUser_nickname());
+		System.out.println("" + param.getUser_email());
+		
+		return userInfo;
+	}
+	
+	public HashMap<String, Object> getUserQquestionById(UserVo param) {
+		HashMap<String, Object> userInfo = userSQLMapper.getUserQuestionById(param.getUser_id());
+		
+		return userInfo;
+	}
 }

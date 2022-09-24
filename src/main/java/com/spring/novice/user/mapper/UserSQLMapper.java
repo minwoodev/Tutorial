@@ -1,6 +1,9 @@
 package com.spring.novice.user.mapper;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+
+import org.apache.ibatis.annotations.Param;
 
 import com.spring.novice.vo.MailAuthVo;
 import com.spring.novice.vo.QuestionVo;
@@ -36,4 +39,9 @@ public interface UserSQLMapper {
 	
 	/* 비밀번호 찾기 힌트 */
 	public ArrayList<QuestionVo> getJoinQuestionList();
+	
+	/* 아이디 찾기 */
+	public HashMap<String, Object> getUserIdByNameAndEmail(@Param("user_nickname") String user_nickname, @Param("user_email") String user_email);
+	
+	public HashMap<String, Object> getUserQuestionById(@Param("user_id") String user_id);
 }

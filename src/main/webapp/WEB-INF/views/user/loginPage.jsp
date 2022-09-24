@@ -69,7 +69,7 @@
 									</div>
 								</div>
 								<div class="row mt-2">
-									<a href="../user/searchID">아이디찾기</a>
+									<a href="../user/findUserInfoPage">아이디찾기</a>
 								</div>
 							</div>
 						</div>
