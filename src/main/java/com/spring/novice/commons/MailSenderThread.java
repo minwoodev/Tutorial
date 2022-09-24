@@ -26,7 +26,7 @@ public class MailSenderThread extends Thread {
 			mimeMessageHelper.setSubject("회원가입을 축하드립니다.");
 			mimeMessageHelper.setText(message, true);
 			
-			mimeMessageHelper.setFrom("qwer", "FP 관리자");
+			mimeMessageHelper.setFrom("qwer", "관리자");
 			mimeMessageHelper.setTo(to);
 			
 			javaMailSender.send(mimeMessage);

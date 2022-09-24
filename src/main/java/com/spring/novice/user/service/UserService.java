@@ -7,6 +7,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import com.spring.novice.commons.MailSenderThread;
+import com.spring.novice.commons.MessageDigestUtil;
 import com.spring.novice.user.mapper.UserSQLMapper;
 import com.spring.novice.vo.MailAuthVo;
 import com.spring.novice.vo.UserVo;
@@ -23,11 +24,16 @@ public class UserService {
 	public void insertUser(UserVo param) {
 
 		int userNo = userSQLMapper.createUserPk();
-		
+
 		param.setUser_no(userNo);
 
-		userSQLMapper.insertUser(param);		
-		
+		// 비밀번호 해싱...
+		String password = param.getUser_pw();
+		password = MessageDigestUtil.getPasswordHashCode(password);
+		param.setUser_pw(password);
+
+		userSQLMapper.insertUser(param);
+
 		// 메일 인증....관련...
 		UUID uuid = UUID.randomUUID();
 		String authKey = uuid.toString();
@@ -41,15 +47,11 @@ public class UserService {
 		// 키를 메일로 보낸다....
 		String text = "";
 		text += "회원가입을 축하드립니다. 아래 링크를 클릭하셔서 메일 인증 완료를 부탁드립니다.<br>";
-		text += "<a href='http://localhost:8181/user/mailAuthProcess?authKey=" + authKey
-				+ "'>메일 인증하기</a>";
+		text += "<a href='http://localhost:8181/user/mailAuthProcess?authKey=" + authKey + "'>메일 인증하기</a>";
 
 		MailSenderThread mst = new MailSenderThread(javaMailSender, param.getUser_email(), text);
 		mst.start(); // 쓰레드 실행.... 클래스의 run 메소드가 쓰레드로 실행된다...
 
-
-		
-		
 	}
 
 	public boolean isSelectById(String user_id) {
@@ -69,9 +71,15 @@ public class UserService {
 	}
 
 	public UserVo selectByIdAndPw(UserVo param) {
+
+		// 비밀번호 해싱...
+		String password = param.getUser_pw();
+		password = MessageDigestUtil.getPasswordHashCode(password);
+		param.setUser_pw(password);
+
 		return userSQLMapper.getUserByIdAndPw(param);
 	}
-	
+
 	public void authMail(String key) {
 		userSQLMapper.updateMailAuthComplete(key);
 	}
