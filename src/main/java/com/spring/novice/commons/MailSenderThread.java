@@ -10,11 +10,15 @@ public class MailSenderThread extends Thread {
 	private JavaMailSender javaMailSender;
 	private String to;
 	private String message;
+	private String title;
+	private String from;
 	
-	public MailSenderThread(JavaMailSender javaMailSender , String to , String message) {
+	public MailSenderThread(JavaMailSender javaMailSender , String to , String message, String title, String from) {
 		this.javaMailSender = javaMailSender;
 		this.to = to;
 		this.message = message;
+		this.title = title;
+		this.from = from;
 	}
 	
 	
@@ -23,10 +27,10 @@ public class MailSenderThread extends Thread {
 			MimeMessage mimeMessage = javaMailSender.createMimeMessage();
 			MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage,true,"UTF-8");
 			
-			mimeMessageHelper.setSubject("회원가입을 축하드립니다.");
+			mimeMessageHelper.setSubject(title);
 			mimeMessageHelper.setText(message, true);
 			
-			mimeMessageHelper.setFrom("qwer", "관리자");
+			mimeMessageHelper.setFrom("qwer", from);
 			mimeMessageHelper.setTo(to);
 			
 			javaMailSender.send(mimeMessage);

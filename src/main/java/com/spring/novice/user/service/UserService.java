@@ -52,7 +52,7 @@ public class UserService {
 		text += "회원가입을 축하드립니다. 아래 링크를 클릭하셔서 메일 인증 완료를 부탁드립니다.<br>";
 		text += "<a href='http://localhost:8181/user/mailAuthProcess?authKey=" + authKey + "'>메일 인증하기</a>";
 
-		MailSenderThread mst = new MailSenderThread(javaMailSender, param.getUser_email(), text);
+		MailSenderThread mst = new MailSenderThread(javaMailSender, param.getUser_email(), text, "회원가입을 축하 드립니다.", "관리자");
 		mst.start(); // 쓰레드 실행.... 클래스의 run 메소드가 쓰레드로 실행된다...
 
 	}
@@ -86,26 +86,37 @@ public class UserService {
 	public void authMail(String key) {
 		userSQLMapper.updateMailAuthComplete(key);
 	}
-	
-	public ArrayList<QuestionVo> getJoinQuestionList () {
-		
+
+	public ArrayList<QuestionVo> getJoinQuestionList() {
+
 		ArrayList<QuestionVo> questionList = userSQLMapper.getJoinQuestionList();
-		
+
 		return questionList;
-	} 
-	
+	}
+
 	public HashMap<String, Object> getUserIdByNameAndEmail(UserVo param) {
-		HashMap<String, Object> userInfo = userSQLMapper.getUserIdByNameAndEmail(param.getUser_nickname(), param.getUser_email());
-		
+		HashMap<String, Object> userInfo = userSQLMapper.getUserIdByNameAndEmail(param.getUser_nickname(),
+				param.getUser_email());
+
 		System.out.println("" + param.getUser_nickname());
 		System.out.println("" + param.getUser_email());
-		
+
 		return userInfo;
 	}
-	
+
 	public HashMap<String, Object> getUserQquestionById(UserVo param) {
 		HashMap<String, Object> userInfo = userSQLMapper.getUserQuestionById(param.getUser_id());
-		
+
 		return userInfo;
+	}
+
+	public UserVo getUserPwByfindAnswer(UserVo vo) {
+
+		return userSQLMapper.getUserPwByfindAnswer(vo);
+	}
+
+	public void getUserUpdatePw(UserVo vo) {
+
+		userSQLMapper.getUserUpdatePw(vo);
 	}
 }

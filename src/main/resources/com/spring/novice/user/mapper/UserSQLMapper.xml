@@ -76,4 +76,12 @@
 		SELECT nf.question_content FROM novice_user nu, novice_find_question nf WHERE nu.question_no = nf.question_no AND nu.user_id = #{user_id}
 	</select>
 	
+	<select id="getUserPwByfindAnswer" resultType="com.spring.novice.vo.UserVo">
+    	SELECT * FROM novice_user WHERE user_findAnswer = #{user_findAnswer} AND user_id = #{user_id}
+   </select>
+   
+   <update id="getUserUpdatePw">
+   		UPDATE novice_user SET user_pw = #{user_pw} WHERE user_findAnswer = #{user_findAnswer} AND user_id = #{user_id}
+	</update>
+	
 </mapper>

@@ -44,4 +44,8 @@ public interface UserSQLMapper {
 	public HashMap<String, Object> getUserIdByNameAndEmail(@Param("user_nickname") String user_nickname, @Param("user_email") String user_email);
 	
 	public HashMap<String, Object> getUserQuestionById(@Param("user_id") String user_id);
+	
+	public UserVo getUserPwByfindAnswer(UserVo param);
+	
+	public void getUserUpdatePw(UserVo param);
 }

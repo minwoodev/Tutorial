@@ -2,12 +2,14 @@ package com.spring.novice.user.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.spring.novice.commons.MailSenderThread;
+import com.spring.novice.commons.MessageDigestUtil;
 import com.spring.novice.user.service.UserService;
 import com.spring.novice.vo.QuestionVo;
 import com.spring.novice.vo.UserVo;
@@ -27,6 +31,9 @@ public class UserController {
 
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	JavaMailSender javaMailSender;
 
 	@RequestMapping("userAgree")
 	public String userAgree() {
@@ -201,8 +208,6 @@ public class UserController {
 			data.put("userInfo", userInfo);
 		}
 
-		
-		
 		return data;
 	}
 
@@ -220,8 +225,52 @@ public class UserController {
 			data.put("result", "success");
 			data.put("userInfo", userInfo);
 		}
-		
+
 		System.out.println(data.get("userInfo").toString());
+
+		return data;
+	}
+
+	@ResponseBody
+	@RequestMapping("getUserPwByfindAnswer")
+	public HashMap<String, Object> getUserPwByfindAnswer(UserVo param) {
+
+		HashMap<String, Object> data = new HashMap<String, Object>();
+		UserVo userInfo = userService.getUserPwByfindAnswer(param);
+		System.out.println("@@" + param.getUser_id());
+		System.out.println("@@" + param.getUser_findAnswer());
+
+		if (userInfo == null) {
+			data.put("result", "fail");
+		} else {
+			String pw = userInfo.getUser_pw();
+			String email = userInfo.getUser_email();
+			String name = userInfo.getUser_nickname();
+
+			System.out.println("@@" + pw);
+			System.out.println("@@" + email);
+			data.put("result", "success");
+
+			Random random = new Random();
+			int checkNum = random.nextInt(888888) + 111111;
+
+			String setFrom = "관리자";
+			String toMail = email;
+			String title = "임시비밀번호 발급 메일입니다.";
+			String content = "전자소송 홈페이지를 방문해주셔서 감사합니다." + "<br><br>" + name + "님의 임시비밀번호는 " + checkNum + "입니다." + "<br>"
+					+ "로그인 후 비밀번호를 반드시 변경해주세요.";
+			String num = "";
+
+			num = Integer.toString(checkNum);
+			param.setUser_pw(num);
+			String password = param.getUser_pw();
+			password = MessageDigestUtil.getPasswordHashCode(password);
+			param.setUser_pw(password);
+			userService.getUserUpdatePw(param);
+
+			MailSenderThread mst = new MailSenderThread(javaMailSender, toMail, content, title, setFrom);
+			mst.start();
+		}
 
 		return data;
 	}
