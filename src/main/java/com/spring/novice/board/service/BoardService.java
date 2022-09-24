@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.text.StringEscapeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -106,7 +107,13 @@ public class BoardService {
 
 		BoardVo boardVo = boardSQLMapper.getBoardByNo(board_no);
 		UserVo userVo = userSQLMapper.getUserByNo(boardVo.getUser_no());
-		
+
+		String content = boardVo.getBoard_content();
+		content = StringEscapeUtils.escapeHtml4(content);
+		content = content.replaceAll("\n", "<br>");
+		content = content.replaceAll(" ", "&nbsp;");
+		boardVo.setBoard_content(content);
+
 		map.put("userVo", userVo);
 		map.put("boardVo", boardVo);
 
