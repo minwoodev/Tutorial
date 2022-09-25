@@ -62,4 +62,7 @@ public interface UserSQLMapper {
 	
 	/* 계정 활성화 */
 	public void recoveryUserByInfo(UserVo vo);
+	
+	/* 계정 정보 수정*/
+	public void updateUserInfoByUserNo(UserVo vo);
 }

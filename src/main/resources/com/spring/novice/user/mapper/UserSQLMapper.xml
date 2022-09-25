@@ -103,4 +103,15 @@
 		UPDATE novice_user SET user_status = 'active' WHERE user_id = #{user_id} AND user_nickname = #{user_nickname} AND user_email = #{user_email}
 	</update>	
 
+	<update id="updateUserInfoByUserNo">
+		UPDATE novice_user SET 
+		question_no = #{question_no},
+		user_pw = #{user_pw},
+		user_nickname = #{user_nickname},
+		user_phone = #{user_phone},
+		user_email = #{user_email},
+		user_findAnswer = #{user_findAnswer} WHERE user_no = #{user_no}
+	</update>
+
+	
 </mapper>

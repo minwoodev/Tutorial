@@ -143,4 +143,11 @@ public class UserService {
 		vo.setUser_pw(password);
 		userSQLMapper.recoveryUserByInfo(vo);
 	}
+
+	public void updateUserInfoByUserNo(UserVo vo) {
+		String password = vo.getUser_pw();
+		password = MessageDigestUtil.getPasswordHashCode(password);
+		vo.setUser_pw(password);
+		userSQLMapper.updateUserInfoByUserNo(vo);
+	}
 }

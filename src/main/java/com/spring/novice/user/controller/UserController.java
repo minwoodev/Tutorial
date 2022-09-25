@@ -339,24 +339,72 @@ public class UserController {
 
 		return "/user/userRecoveryPage";
 	}
-	
+
 	@ResponseBody
 	@RequestMapping("recoveryUserByInfo")
-	public HashMap<String, Object> recoveryUserByInfo (UserVo vo){
-		
+	public HashMap<String, Object> recoveryUserByInfo(UserVo vo) {
+
 		HashMap<String, Object> data = new HashMap<String, Object>();
-		
-		
+
 		int checkUser = userService.checkUser(vo);
-        
-        if ( checkUser == 1 ) {
-        	userService.recoveryUserByInfo(vo);
+
+		if (checkUser == 1) {
+			userService.recoveryUserByInfo(vo);
 			data.put("result", "success");
 		} else {
 			data.put("result", "fail");
 		}
-		
+
 		return data;
 	}
 
+	@ResponseBody
+	@RequestMapping("getQuestionList")
+	public HashMap<String, Object> getQuestionList() {
+
+		HashMap<String, Object> data = new HashMap<String, Object>();
+
+		ArrayList<QuestionVo> questionList = userService.getJoinQuestionList();
+
+		data.put("questionList", questionList);
+
+		return data;
+	}
+
+	@ResponseBody
+	@RequestMapping("mailCheck")
+	public String mailCheck(String userEmail) throws Exception {
+
+		Random random = new Random();
+		int checkNum = random.nextInt(888888) + 111111;
+
+		String setFrom = "관리자";
+		String toMail = userEmail;
+		String title = "인증 이메일 입니다.";
+		String content = "홈페이지를 방문해주셔서 감사합니다." + "<br><br>" + "인증 번호는 " + checkNum + "입니다." + "<br>"
+				+ "해당 인증번호를 인증번호 확인란에 기입하여 주세요.";
+		String num = "";
+
+		num = Integer.toString(checkNum);
+
+		MailSenderThread mst = new MailSenderThread(javaMailSender, toMail, content, title, setFrom);
+		mst.start();
+
+		return num;
+	}
+
+	@ResponseBody
+	@RequestMapping("updateUserInfoByUserNo")
+	public HashMap<String, Object> updateUserInfoByUserNo(UserVo vo, HttpSession session) {
+
+		HashMap<String, Object> data = new HashMap<String, Object>();
+
+		UserVo sessionUser = (UserVo) session.getAttribute("sessionUser");
+		
+		vo.setUser_no(sessionUser.getUser_no());
+		
+		userService.updateUserInfoByUserNo(vo);
+
+		return data;
+	}
 }
