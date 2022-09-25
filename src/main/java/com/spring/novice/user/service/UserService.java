@@ -99,9 +99,6 @@ public class UserService {
 		HashMap<String, Object> userInfo = userSQLMapper.getUserIdByNameAndEmail(param.getUser_nickname(),
 				param.getUser_email());
 
-		System.out.println("" + param.getUser_nickname());
-		System.out.println("" + param.getUser_email());
-
 		return userInfo;
 	}
 

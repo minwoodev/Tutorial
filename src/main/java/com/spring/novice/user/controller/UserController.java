@@ -241,13 +241,10 @@ public class UserController {
 
 		HashMap<String, Object> data = new HashMap<String, Object>();
 		UserVo userInfo = userService.getUserPwByfindAnswer(param);
-		System.out.println("@@" + param.getUser_id());
-		System.out.println("@@" + param.getUser_findAnswer());
 
 		if (userInfo == null) {
 			data.put("result", "fail");
 		} else {
-			String pw = userInfo.getUser_pw();
 			String email = userInfo.getUser_email();
 			String name = userInfo.getUser_nickname();
 			data.put("result", "success");
@@ -258,7 +255,7 @@ public class UserController {
 			String setFrom = "관리자";
 			String toMail = email;
 			String title = "임시비밀번호 발급 메일입니다.";
-			String content = "전자소송 홈페이지를 방문해주셔서 감사합니다." + "<br><br>" + name + "님의 임시비밀번호는 " + checkNum + "입니다." + "<br>"
+			String content = "홈페이지를 방문해주셔서 감사합니다." + "<br><br>" + name + "님의 임시비밀번호는 " + checkNum + "입니다." + "<br>"
 					+ "로그인 후 비밀번호를 반드시 변경해주세요.";
 			String num = "";
 
