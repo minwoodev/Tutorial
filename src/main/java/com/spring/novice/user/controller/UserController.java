@@ -31,7 +31,7 @@ public class UserController {
 
 	@Autowired
 	UserService userService;
-	
+
 	@Autowired
 	JavaMailSender javaMailSender;
 
@@ -164,6 +164,10 @@ public class UserController {
 		if (sessionUser != null) {
 			session.setAttribute("sessionUser", sessionUser);
 			data.put("result", "success");
+			String state = sessionUser.getUser_status();
+			if (state.equals("Inactive")) {
+				data.put("result", "out");
+			}
 		} else {
 			data.put("result", "fail");
 		}
@@ -246,9 +250,6 @@ public class UserController {
 			String pw = userInfo.getUser_pw();
 			String email = userInfo.getUser_email();
 			String name = userInfo.getUser_nickname();
-
-			System.out.println("@@" + pw);
-			System.out.println("@@" + email);
 			data.put("result", "success");
 
 			Random random = new Random();
@@ -274,4 +275,88 @@ public class UserController {
 
 		return data;
 	}
+
+	@RequestMapping("userInfoPage")
+	public String userInfoPage() {
+		return "user/userInfoPage";
+	}
+
+	@ResponseBody
+	@RequestMapping("checkSession")
+	public HashMap<String, Object> checkSession(HttpSession session) {
+
+		HashMap<String, Object> data = new HashMap<String, Object>();
+
+		UserVo sessionUser = (UserVo) session.getAttribute("sessionUser");
+
+		if (sessionUser == null) {
+			data.put("result", "fail");
+		} else {
+			data.put("result", "success");
+			data.put("sessionUser", sessionUser);
+		}
+
+		return data;
+	}
+
+	@ResponseBody
+	@RequestMapping("getUserInfoByUserNo")
+	public HashMap<String, Object> getUserInfoByUserNo(int userNo) {
+
+		HashMap<String, Object> data = new HashMap<String, Object>();
+
+		HashMap<String, Object> userData = userService.getUserInfoByUserNo(userNo);
+
+		data.put("userData", userData);
+
+		return data;
+	}
+
+	@ResponseBody
+	@RequestMapping("deleteUserInfoByUserNo")
+	public HashMap<String, Object> deleteUserInfoByUserNo(UserVo vo, HttpSession session) {
+
+		HashMap<String, Object> data = new HashMap<String, Object>();
+
+		UserVo sessionUser = (UserVo) session.getAttribute("sessionUser");
+		String password = vo.getUser_pw();
+		password = MessageDigestUtil.getPasswordHashCode(password);
+		vo.setUser_pw(password);
+
+		if (sessionUser.getUser_pw().equals(vo.getUser_pw())) {
+
+			userService.deleteUserInfoByUserNo(sessionUser);
+			session.invalidate();
+			data.put("result", "success");
+		} else {
+			data.put("result", "fail");
+		}
+		return data;
+	}
+
+	@RequestMapping("userRecoveryPage")
+	public String userRecoveryPage() {
+
+		return "/user/userRecoveryPage";
+	}
+	
+	@ResponseBody
+	@RequestMapping("recoveryUserByInfo")
+	public HashMap<String, Object> recoveryUserByInfo (UserVo vo){
+		
+		HashMap<String, Object> data = new HashMap<String, Object>();
+		
+		
+		int checkUser = userService.checkUser(vo);
+        
+        if ( checkUser == 1 ) {
+        	userService.recoveryUserByInfo(vo);
+			data.put("result", "success");
+		} else {
+			data.put("result", "fail");
+		}
+		
+		return data;
+	}
+
 }

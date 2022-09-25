@@ -38,7 +38,7 @@
 	</select>
 	
 	<select id="selectByEmail" resultType="int">
-		SELECT count(*) FROM novice_user WHERE user_eamil = #{user_eamil}
+		SELECT count(*) FROM novice_user WHERE user_email = #{user_eamil}
 	</select>
 	
 	<select id="getUserByIdAndPw" resultType="com.spring.novice.vo.UserVo">
@@ -84,4 +84,23 @@
    		UPDATE novice_user SET user_pw = #{user_pw} WHERE user_findAnswer = #{user_findAnswer} AND user_id = #{user_id}
 	</update>
 	
+	<select id="getUserInfoByUserNo" resultType="map">
+		SELECT * FROM novice_user nu, novice_find_question nf WHERE user_no = #{user_no} AND nu.question_no = nf.question_no
+	</select>
+	
+	<update id="deleteUserInfoByUserNo">
+		UPDATE novice_user SET
+		user_status = 'Inactive'
+		WHERE user_no = #{user_no}
+		AND user_pw = #{user_pw}
+	</update>
+	
+	<select id="checkUser" resultType="int">
+		SELECT count(*) FROM novice_user WHERE user_id = #{user_id} AND user_nickname = #{user_nickname} AND user_email = #{user_email}
+	</select>
+	
+	<update id="recoveryUserByInfo">
+		UPDATE novice_user SET user_status = 'active' WHERE user_id = #{user_id} AND user_nickname = #{user_nickname} AND user_email = #{user_email}
+	</update>	
+
 </mapper>

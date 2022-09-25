@@ -43,9 +43,23 @@ public interface UserSQLMapper {
 	/* 아이디 찾기 */
 	public HashMap<String, Object> getUserIdByNameAndEmail(@Param("user_nickname") String user_nickname, @Param("user_email") String user_email);
 	
+	/* 비밀번호 찾기 질문 */
 	public HashMap<String, Object> getUserQuestionById(@Param("user_id") String user_id);
 	
+	/* 비밀번호 찾기 질문 답변 */	
 	public UserVo getUserPwByfindAnswer(UserVo param);
 	
+	/* 임시 비밀번호 변경 */
 	public void getUserUpdatePw(UserVo param);
+	
+	public HashMap<String, Object> getUserInfoByUserNo(@Param("user_no") int user_no);
+
+	/* 회원탈퇴 */
+	public void deleteUserInfoByUserNo(UserVo sessionUser);
+	
+	/* 유저 체크 */
+	public int checkUser(UserVo vo);
+	
+	/* 계정 활성화 */
+	public void recoveryUserByInfo(UserVo vo);
 }

@@ -25,10 +25,8 @@
     <script type="text/javascript" src="../resources/js/commons/loginBox.js"></script>
     <script type="text/javascript" src="../resources/js/frame/dropdown.js"></script>
     <script type="text/javascript" src="../resources/js/frame/jquery-3.6.0.min.js"></script>
-
 </head>
-<body>
-	
+<body>	
     <section class="container-fluid">
         <div class="row mt-4">
             <div class="col">

@@ -52,7 +52,8 @@ public class UserService {
 		text += "회원가입을 축하드립니다. 아래 링크를 클릭하셔서 메일 인증 완료를 부탁드립니다.<br>";
 		text += "<a href='http://localhost:8181/user/mailAuthProcess?authKey=" + authKey + "'>메일 인증하기</a>";
 
-		MailSenderThread mst = new MailSenderThread(javaMailSender, param.getUser_email(), text, "회원가입을 축하 드립니다.", "관리자");
+		MailSenderThread mst = new MailSenderThread(javaMailSender, param.getUser_email(), text, "회원가입을 축하 드립니다.",
+				"관리자");
 		mst.start(); // 쓰레드 실행.... 클래스의 run 메소드가 쓰레드로 실행된다...
 
 	}
@@ -118,5 +119,28 @@ public class UserService {
 	public void getUserUpdatePw(UserVo vo) {
 
 		userSQLMapper.getUserUpdatePw(vo);
+	}
+
+	public HashMap<String, Object> getUserInfoByUserNo(int userNo) {
+		HashMap<String, Object> userInfo = userSQLMapper.getUserInfoByUserNo(userNo);
+
+		return userInfo;
+	}
+
+	public void deleteUserInfoByUserNo(UserVo sessionUser) {
+		userSQLMapper.deleteUserInfoByUserNo(sessionUser);
+	}
+
+	public int checkUser(UserVo vo) {
+
+		return userSQLMapper.checkUser(vo);
+	}
+
+	public void recoveryUserByInfo(UserVo vo) {
+
+		String password = vo.getUser_pw();
+		password = MessageDigestUtil.getPasswordHashCode(password);
+		vo.setUser_pw(password);
+		userSQLMapper.recoveryUserByInfo(vo);
 	}
 }
