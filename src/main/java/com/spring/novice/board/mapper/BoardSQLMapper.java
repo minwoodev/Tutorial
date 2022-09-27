@@ -94,4 +94,7 @@ public interface BoardSQLMapper {
 	/* 내가 좋아요 했는지 여부 */
 	public int getMyLikeCount(BoardLikeVo param);
 	
+	/* 내가 쓴 글 목록 */
+	public ArrayList<BoardVo> getMyBoardList(@Param("user_no") int user_no, @Param("pageNum") int pageNum);
+	
 }

@@ -80,6 +80,31 @@ public class BoardService {
 
 		return dataList;
 	}
+	
+	public ArrayList<HashMap<String, Object>> getMyBoardList(int user_no, int pageNum) {
+		ArrayList<HashMap<String, Object>> dataList = new ArrayList<HashMap<String, Object>>();
+		
+		ArrayList<BoardVo> myBoardList = boardSQLMapper.getMyBoardList(user_no, pageNum);
+		
+		for (BoardVo param : myBoardList) {
+			
+			int totalLikeCount = boardSQLMapper.getTotalLikeCount(param.getBoard_no());
+			int totalCommentCount = commentSQLMapper.getTotalCommentCount(param.getBoard_no());
+			UserVo userVo = userSQLMapper.getUserByNo(user_no);
+			
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			
+			map.put("boardVo", param);
+			map.put("userVo", userVo);
+			map.put("totalLikeCount", totalLikeCount);
+			map.put("totalCommentCount", totalCommentCount);
+			
+			dataList.add(map);
+		}
+		
+		return dataList;
+
+	}
 
 	public int getBoardCount(String category, String keyword) {
 

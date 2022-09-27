@@ -20,7 +20,7 @@
 		        </a>
 		        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
 		          <li><a class="dropdown-item" href="../user/userInfoPage">마이페이지</a></li>
-		          <li><a class="dropdown-item" href="#">내가 쓴 글 목록</a></li>
+		          <li><a class="dropdown-item" href="../board/myBoardPage?user_no=${sessionUser.user_no }">내가 쓴 글 목록</a></li>
 		          <li><hr class="dropdown-divider"></li>
 		          <li><a class="dropdown-item" href="../user/logoutUserPorcess">로그아웃</a></li>
 		        </ul>

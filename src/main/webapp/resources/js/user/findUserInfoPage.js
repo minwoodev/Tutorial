@@ -21,11 +21,6 @@ window.addEventListener("DOMContentLoaded", function () {
 		);
 		
 		$("#findIdButton").click(function () {
-			
-			console.log($("#findNameInput").val());
-			console.log($("#userEmail").val());
-
-			
 			$.ajax({
 				type: "get",
 				url: "../user/getUserIdByNameAndEmail",
@@ -80,8 +75,6 @@ window.addEventListener("DOMContentLoaded", function () {
 		);
 		
 		$("#findQuestionButton").click(function () {
-			
-			console.log($("#findIdInput").val());
 			
 			$.ajax({
 				type: "get",
