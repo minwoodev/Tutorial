@@ -18,6 +18,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Gothic:wght@400;700;800&display=swap" rel="stylesheet">
 
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="http://lab.alexcican.com/set_cookies/cookie.js" type="text/javascript"></script>
 
@@ -61,8 +62,20 @@
 						<table class="table" style="border-top:1px solid steelblue; border-bottom:2px solid steelblue">
 		               		<tr>
 		               			<th scope="row" width=100px align="center" style="border-right:2px solid steelblue">작성자</th>
-		               			<td width=100px align="center"> 
-		               				${data.userVo.user_nickname }
+		               			<td width=100px> 
+									<nav>
+										<ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+											<li class="nav-item dropdown">
+												<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+													${data.userVo.user_nickname }
+												</a>
+												<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+													<li><a class="dropdown-item" href="../board/mainPage?category=nick&keyword=${data.userVo.user_nickname }">게시글 보기</a></li>
+													<li><a class="dropdown-item" href="#">쪽지 보내기</a></li>
+												</ul>
+											</li>
+										</ul>
+									</nav>
 		               			</td>
 		               		</tr>
 		

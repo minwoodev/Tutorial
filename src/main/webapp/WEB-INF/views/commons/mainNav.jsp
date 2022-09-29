@@ -14,6 +14,9 @@
 			  <li class="nav-item">
 			  	<a class="nav-link" href="../board/mainPage">홈</a>
 			  </li>
+			  <li class="nav-item">
+			  	<a class="nav-link" href="#">쪽지보내기</a>
+			  </li>
 		      <li class="nav-item dropdown">
 		        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 		          ${sessionUser.user_nickname }
@@ -35,7 +38,7 @@
 		      </li>
 		      <li class="nav-item">
 		      	<a class="nav-link" href="../user/userAgree">회원가입</a>
-		      </li>
+		      </li>		      
 			</c:otherwise>
 		</c:choose>
       
