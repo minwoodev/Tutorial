@@ -70,7 +70,7 @@
 													${data.userVo.user_nickname }
 												</a>
 												<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-													<li><a class="dropdown-item" href="../board/mainPage?category=nick&keyword=${data.userVo.user_nickname }">게시글 보기</a></li>
+													<li><a class="dropdown-item" href="../board/myBoardPage?user_no=${data.userVo.user_no }">게시글 보기</a></li>
 													<li><a class="dropdown-item" href="#">쪽지 보내기</a></li>
 												</ul>
 											</li>
