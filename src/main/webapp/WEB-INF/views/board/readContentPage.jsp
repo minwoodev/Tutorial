@@ -33,6 +33,14 @@
 			formObj.attr("action", "/board/fileDown");
 			formObj.submit();
 		}
+	    
+	    function goPage(userNo) {
+	        var formObj = $("form[name='readForm']");
+	        $("#USER_NO").attr("value", userNo);
+	        formObj.attr("method", "post");
+	        formObj.attr("action", "/board/myBoardPage")
+	        formObj.submit();
+	    }
     </script>
     
 </head>
@@ -54,6 +62,7 @@
 				
 				<form name="readForm" role="form" method="post">
 					<input type="hidden" id="FILE_NO" name="file_no" value="">
+					<input type="hidden" id="USER_NO" name="user_no" value="">
 				</form>
 
                 <!-- 페이지별 내용 시작-->
@@ -70,8 +79,8 @@
 													${data.userVo.user_nickname }
 												</a>
 												<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-													<li><a class="dropdown-item" href="../board/myBoardPage?user_no=${data.userVo.user_no }">게시글 보기</a></li>
-													<li><a class="dropdown-item" href="#">쪽지 보내기</a></li>
+													<li><a class="dropdown-item" href="javascript:goPage(${data.userVo.user_no });">게시글 보기</a></li>
+													<li><a class="dropdown-item" href="../user/userNotePage">쪽지 보내기</a></li>
 												</ul>
 											</li>
 										</ul>

@@ -346,8 +346,9 @@ public class BoardController {
 		return "redirect:./readContentPage?board_no=" + param.getBoard_no();
 	}
 
-	@RequestMapping("myBoardPage")
-	public String myBoardPage(Model model, int user_no, @RequestParam(value = "pageNum", defaultValue = "1") int pageNum) {
+	@RequestMapping(value = "myBoardPage")
+	public String myBoardPage(Model model, int user_no,
+			@RequestParam(value = "pageNum", defaultValue = "1") int pageNum) {
 		ArrayList<HashMap<String, Object>> dataList = boardService.getMyBoardList(user_no, pageNum);
 
 		int count = boardService.getBoardCount("", "");
@@ -361,14 +362,13 @@ public class BoardController {
 			endPage = totalPageCount;
 		}
 
-
 		model.addAttribute("count", count);
 		model.addAttribute("startPage", startPage);
 		model.addAttribute("endPage", endPage);
 		model.addAttribute("currentPage", pageNum);
 		model.addAttribute("totalPageCount", totalPageCount);
 		model.addAttribute("dataList", dataList);
-		
+
 		return "board/myBoardPage";
 	}
 }

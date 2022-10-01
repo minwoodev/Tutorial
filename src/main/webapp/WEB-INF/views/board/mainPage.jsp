@@ -24,6 +24,17 @@
 
     <script type="text/javascript" src="../resources/js/frame/dropdown.js"></script>
     <script type="text/javascript" src="../resources/js/frame/jquery-3.6.0.min.js"></script>
+    
+    <script type="text/javascript">
+	    function goPage(boardNo) {
+	        var formObj = $("form[name='readForm']");
+	        $("#BOARD_NO").attr("value", boardNo);
+	        formObj.attr("method", "post");
+	        formObj.attr("action", "/board/readContentPage")
+	        formObj.submit();
+	    }
+    </script>
+    
 </head>
 <body>	
     <section class="container-fluid">
@@ -55,6 +66,11 @@
                 	</form>
                 </div>
 
+				<form name="readForm" role="form" method="post">					
+					<input type="hidden" id="BOARD_NO" name="board_no" value="">
+				</form>
+				
+
                 <!-- 페이지별 내용 시작-->
 				<div class="row formTable">
 					<table>
@@ -78,19 +94,19 @@
 									
 									<c:if test="${data.boardVo.board_secret == 'N' }">
 										<c:if test="${!empty data.newKeyword }">
-											<td class="text-center"><a href="../board/readContentPage?board_no=${data.boardVo.board_no }">${data.boardVo.board_title }<span class="badge bg-danger">new</span></a></td>
+											<td class="text-center"><a href="javascript:goPage(${data.boardVo.board_no });">${data.boardVo.board_title }<span class="badge bg-danger">new</span></a></td>
 										</c:if>
 										<c:if test="${empty data.newKeyword }">
-											<td class="text-center"><a href="../board/readContentPage?board_no=${data.boardVo.board_no }">${data.boardVo.board_title }</a></td>
+											<td class="text-center"><a href="javascript:goPage(${data.boardVo.board_no });">${data.boardVo.board_title }</a></td>
 										</c:if>
 									</c:if>
 									
 									<c:if test="${sessionUser.user_no == data.userVo.user_no && data.boardVo.board_secret == 'Y' }">
 										<c:if test="${!empty data.newKeyword }">
-											<td class="text-center"><a href="../board/readContentPage?board_no=${data.boardVo.board_no }">${data.boardVo.board_title }<span class="badge bg-danger">new</span></a></td>
+											<td class="text-center"><a href="javascript:goPage(${data.boardVo.board_no });">${data.boardVo.board_title }<span class="badge bg-danger">new</span></a></td>
 										</c:if>
 										<c:if test="${empty data.newKeyword }">
-											<td class="text-center"><a href="../board/readContentPage?board_no=${data.boardVo.board_no }">${data.boardVo.board_title }</a></td>
+											<td class="text-center"><a href="javascript:goPage(${data.boardVo.board_no });">${data.boardVo.board_title }</a></td>
 										</c:if>
 									</c:if>
 									
