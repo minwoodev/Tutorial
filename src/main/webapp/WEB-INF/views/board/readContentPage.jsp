@@ -38,9 +38,31 @@
 	        var formObj = $("form[name='readForm']");
 	        $("#USER_NO").attr("value", userNo);
 	        formObj.attr("method", "post");
-	        formObj.attr("action", "/board/myBoardPage")
+	        formObj.attr("action", "/board/myBoardPage");
 	        formObj.submit();
 	    }
+	    
+	    function goUpdatePage(boardNo) {
+	        var formObj = $("form[name='updateForm']");
+	        $("#BOARD_NO").attr("value", boardNo);
+	        formObj.attr("method", "post");
+	        formObj.attr("action", "/board/updateContentPage");
+	    	formObj.submit();	    	
+	    }
+	    
+	    function goCommentUpdatePage(commentNo) {
+	    	var formObj = $("form[name='updateCommentForm']");
+	    	$("#COMMENT_NO").attr("value", commentNo);
+	    	formObj.attr("method", "post");
+	    	formObj.attr("action", "/board/updateCommentContentPage");
+	    	formObj.submit();
+	    }
+	    
+	    <!-- 
+	    "javascript:void(window.open('http://localhost:8181/board/updateCommentContentPage?comment_no=${date.commentVo.comment_no }', 
+		'댓글수정페이지','location=no, directories=no, resizable=no, status=no, toolbar=no, menubar=no, width=1024, height=1024'))
+	    -->
+	    
     </script>
     
 </head>
@@ -62,7 +84,15 @@
 				
 				<form name="readForm" role="form" method="post">
 					<input type="hidden" id="FILE_NO" name="file_no" value="">
-					<input type="hidden" id="USER_NO" name="user_no" value="">
+					<input type="hidden" id="USER_NO" name="user_no" value="">									
+				</form>
+				
+				<form name="updateForm" role="form" method="post">
+					<input type="hidden" id="BOARD_NO" name="board_no" value="">
+				</form>
+				
+				<form name="updateCommentForm" role="form" method="post">
+					<input type="hidden" id="COMMENT_NO" name="comment_no" value="">
 				</form>
 
                 <!-- 페이지별 내용 시작-->
@@ -167,8 +197,7 @@
 											<th><a href="./deleteCommentContentProcess?comment_no=${date.commentVo.comment_no }
 																		&board_no=${date.commentVo.board_no} " type="button" class="btn btn-outline-primary">댓글삭제
 																	</a>
-												<a href="javascript:void(window.open('http://localhost:8181/board/updateCommentContentPage?comment_no=${date.commentVo.comment_no }', 
-												'댓글수정페이지','location=no, directories=no, resizable=no, status=no, toolbar=no, menubar=no, width=1024, height=1024'))" 
+												<a href="" 
 												type="button" class="btn btn-outline-primary">댓글수정</a>
 												<a href="../board/commentLikeProcess?board_no=${date.commentVo.board_no }&comment_no=${date.commentVo.comment_no}" type="button" class="btn btn-outline-primary">댓글 좋아요</a>
 											</th>
@@ -203,7 +232,7 @@
                     
 					<c:if test="${sessionUser.user_no == data.boardVo.user_no}">
                     	<a href="./deleteContentProcess?board_no=${data.boardVo.board_no }" class="btn btn-outline-primary" type="button">글삭제</a>
-                    	<a href="./updateContentPage?board_no=${data.boardVo.board_no }" class="btn btn-outline-primary" type="button">글수정</a>	                    	
+                    	<a href="javascript:goUpdatePage(${data.boardVo.board_no });" class="btn btn-outline-primary" type="button">글수정</a>	                    	
                     </c:if>
                 </div>
 

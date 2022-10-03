@@ -35,6 +35,7 @@
 			<mapping path="/board/*"/>
 			<exclude-mapping path="/board/mainPage"/>
 			<exclude-mapping path="/board/readContentPage"/>
+			<exclude-mapping path="/board/myBoardPage" />
 			
 			<beans:bean id="authenticationInterceptor" class="com.spring.novice.interceptor.AuthenticationInterceptor"></beans:bean>
 		</interceptor>

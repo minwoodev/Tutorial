@@ -226,8 +226,8 @@ public class BoardController {
 		return "board/readContentPage";
 	}
 
-	@RequestMapping("updateContentPage")
-	public String updateContentPage(@ModelAttribute("boardVo") BoardVo param, int board_no, Model model) {
+	@RequestMapping(value = "updateContentPage", method = RequestMethod.POST)
+	public String updateContentPage(int board_no, Model model, @ModelAttribute("boardVo") BoardVo param) {
 
 		HashMap<String, Object> data = boardService.getBoard(board_no);
 		ArrayList<HashMap<String, Object>> fileList = boardService.selectFileList(board_no);
