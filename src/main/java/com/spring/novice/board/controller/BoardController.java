@@ -300,7 +300,7 @@ public class BoardController {
 		return "redirect:./readContentPage?board_no=" + param.getBoard_no();
 	}
 
-	@RequestMapping("deleteContentProcess")
+	@RequestMapping(value = "deleteContentProcess", method = RequestMethod.POST)
 	public String deleteContentProcess(int board_no) {
 
 		boardService.deleteContentPage(board_no);

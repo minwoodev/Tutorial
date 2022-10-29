@@ -55,13 +55,37 @@
 	    	$("#COMMENT_NO").attr("value", commentNo);
 	    	formObj.attr("method", "post");
 	    	formObj.attr("action", "/board/updateCommentContentPage");
+	    	window.open('', 'updateCommentView', 'width=1024,height=1024,resizeable,scrollbars');
+	    	formObj.attr("target", "updateCommentView");
 	    	formObj.submit();
 	    }
 	    
-	    <!-- 
-	    "javascript:void(window.open('http://localhost:8181/board/updateCommentContentPage?comment_no=${date.commentVo.comment_no }', 
-		'댓글수정페이지','location=no, directories=no, resizable=no, status=no, toolbar=no, menubar=no, width=1024, height=1024'))
-	    -->
+	    function deleteCommentPage(commentNo, boardNo) {
+	    	var formObj = $("form[name='deleteComment']");
+	    	$("#COMMENTNO").attr("value", commentNo);
+	    	$("#BOARDNO").attr("value", boardNo);
+	    	formObj.attr("method", "post");
+	    	formObj.attr("action", "/board/deleteCommentContentProcess");
+	    	formObj.submit();
+	    }
+	    
+	    function deleteContentPage(boardNo) {
+	        var formObj = $("form[name='updateForm']");
+	        $("#BOARD_NO").attr("value", boardNo);
+	    	formObj.attr("method", "post");
+	    	formObj.attr("action", "/board/deleteContentProcess");
+	    	formObj.submit();	    	
+	    }
+	    
+	    function writeCommentPage(boardNo) {
+	    	var formObj = $("form[name='updateForm']");
+	    	$("#BOARD_NO").attr("value", boardNo);
+	    	formObj.attr("method", "post");
+	    	formObj.attr("action", "/board/wirteCommentContentPage");
+	    	window.open('', 'writeCommentView', 'width=1024,height=1024,resizeable,scrollbars');
+	    	formObj.attr("target", "writeCommentView");
+	    	formObj.submit();
+	    }
 	    
     </script>
     
@@ -93,6 +117,11 @@
 				
 				<form name="updateCommentForm" role="form" method="post">
 					<input type="hidden" id="COMMENT_NO" name="comment_no" value="">
+				</form>
+
+				<form name="deleteComment" role="form" method="post">
+					<input type="hidden" id="COMMENTNO" name="comment_no" value="">
+					<input type="hidden" id="BOARDNO" name="board_no" value="">
 				</form>
 
                 <!-- 페이지별 내용 시작-->
@@ -194,11 +223,9 @@
 									<th class="text-center">${date.totalCommentLikeCount }</th>
 									<c:choose>
 										<c:when test="${sessionUser.user_no == date.commentVo.user_no }">
-											<th><a href="./deleteCommentContentProcess?comment_no=${date.commentVo.comment_no }
-																		&board_no=${date.commentVo.board_no} " type="button" class="btn btn-outline-primary">댓글삭제
+											<th><a href="javascript:deleteCommentPage(${date.commentVo.comment_no }, ${date.commentVo.board_no })" type="button" class="btn btn-outline-primary">댓글삭제
 																	</a>
-												<a href="" 
-												type="button" class="btn btn-outline-primary">댓글수정</a>
+												<a href="javascript:goCommentUpdatePage(${date.commentVo.comment_no });" type="button" class="btn btn-outline-primary">댓글수정</a>
 												<a href="../board/commentLikeProcess?board_no=${date.commentVo.board_no }&comment_no=${date.commentVo.comment_no}" type="button" class="btn btn-outline-primary">댓글 좋아요</a>
 											</th>
 										</c:when>	
@@ -215,9 +242,7 @@
                 
 				<div class="d-grid gap-2 d-md-flex justify-content-md-end">
                     <a href="./mainPage" class="btn btn-outline-primary" type="button">목록으로</a>
-                    <a href="javascript:void(window.open('http://localhost:8181/board/wirteCommentContentPage?board_no=${data.boardVo.board_no }', 
-                    	'댓글작성페이지','location=no, directories=no, resizable=no, status=no, toolbar=no, menubar=no, width=1024, height=1024'))" 
-                    	type="button" class="btn btn-outline-primary">댓글작성
+                    <a href="javascript:writeCommentPage(${data.boardVo.board_no })" type="button" class="btn btn-outline-primary">댓글작성
                     </a>
                     
 					<c:choose>
@@ -231,7 +256,7 @@
 					
                     
 					<c:if test="${sessionUser.user_no == data.boardVo.user_no}">
-                    	<a href="./deleteContentProcess?board_no=${data.boardVo.board_no }" class="btn btn-outline-primary" type="button">글삭제</a>
+                    	<a href="javascript:deleteContentPage(${data.boardVo.board_no })" class="btn btn-outline-primary" type="button">글삭제</a>
                     	<a href="javascript:goUpdatePage(${data.boardVo.board_no });" class="btn btn-outline-primary" type="button">글수정</a>	                    	
                     </c:if>
                 </div>

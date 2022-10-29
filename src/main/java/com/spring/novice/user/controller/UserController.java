@@ -162,11 +162,12 @@ public class UserController {
 		UserVo sessionUser = userService.selectByIdAndPw(param);
 
 		if (sessionUser != null) {
-			session.setAttribute("sessionUser", sessionUser);
-			data.put("result", "success");
 			String state = sessionUser.getUser_status();
 			if (state.equals("Inactive")) {
 				data.put("result", "out");
+			} else {
+				data.put("result", "success");
+				session.setAttribute("sessionUser", sessionUser);			
 			}
 		} else {
 			data.put("result", "fail");

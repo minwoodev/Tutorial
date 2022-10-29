@@ -29,30 +29,6 @@ window.addEventListener("DOMContentLoaded", function () {
 	}
 	checkSession();
 	
-	var getUsnerInfo = function () {
-		$.ajax({
-			type: "get",
-			url: "./getUserInfoByUserNo",
-			data: {
-				userNo: user_no
-			},
-			dataType: "json",
-			// contentType : "application/x-www-form-urlencoded", // post
-			
-			success: function (data) {
-				$("#userId").attr('value', data.userData.USER_ID);
-				$("#userNickName").attr('value', data.userData.USER_NICKNAME);
-				var userPhone = (data.userData.USER_PHONE).slice(-10);				
-				$("#userPhone").attr('value', userPhone);
-				$("#userQuestion").attr('value', data.userData.QUESTION_NO);
-				$("#userEmail").attr('value', data.userData.USER_EMAIL);
-				$("#userfindAnswer").attr('value', data.userData.USER_FINDANSWER);
-				questionValue = data.userData.QUESTION_NO;
-				Email = data.userData.USER_EMAIL;
-			}
-		});
-	}
-	
 	var showDrop = function () {
 		
 		$("#modifyDiv").removeClass('rounded border border-bottom-0 border-2 border-info');
@@ -101,7 +77,31 @@ window.addEventListener("DOMContentLoaded", function () {
 		$("#inactiveButton").click(deleteUserProcess);
 	}
 	
+
 	
+	var getUsnerInfo = function () {
+		$.ajax({
+			type: "get",
+			url: "./getUserInfoByUserNo",
+			data: {
+				userNo: user_no
+			},
+			dataType: "json",
+			// contentType : "application/x-www-form-urlencoded", // post
+			
+			success: function (data) {
+				$("#userId").attr('value', data.userData.USER_ID);
+				$("#userNickName").attr('value', data.userData.USER_NICKNAME);
+				var userPhone = (data.userData.USER_PHONE).slice(-10);				
+				$("#userPhone").attr('value', userPhone);
+				$("#userQuestion").attr('value', data.userData.QUESTION_NO);
+				$("#userEmail").attr('value', data.userData.USER_EMAIL);
+				$("#userfindAnswer").attr('value', data.userData.USER_FINDANSWER);
+				questionValue = data.userData.QUESTION_NO;
+				Email = data.userData.USER_EMAIL;
+			}
+		});
+	}
 	
 	
 	var showModify = function() {
@@ -300,7 +300,7 @@ window.addEventListener("DOMContentLoaded", function () {
 				contentType: "application/x-www-form-urlencoded", // post
 				success: function (data) {
 					alert("수정이 완료되었습니다.");
-					location.href = "./userInfoPage";
+					location.href = "./logoutUserPorcess";
 				}
 			});
 		});

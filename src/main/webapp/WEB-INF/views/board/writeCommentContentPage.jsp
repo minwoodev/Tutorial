@@ -37,13 +37,22 @@
 		}
 	</style>
 
-	<script>
+	<script type="text/javascript">
 		function cmaTextareaSize(obj, bsize) { // 객체명, 기본사이즈
 			var sTextarea = document.getElementById(obj);
 			var csize = (sTextarea.scrollHeight >= bsize) ? sTextarea.scrollHeight + "px" : bsize + "px";
 			sTextarea.style.height = bsize + "px";
 			sTextarea.style.height = csize;
 		}
+		
+		function writeCommentButton(boardNo) {
+			$("#writeCommentContentForm").submit();
+			 setTimeout(function() {   
+				window.parent.location='../board/readContentPage?board_no=' + boardNo;
+				window.close();
+	          }, 100);
+		}
+		
 	</script>    
     
 </head>
@@ -93,11 +102,11 @@
                 	
                 	<div class="row mt-2">
                 		<div class="col">
-                			<form:textarea type="text" class="from-control" placeholder="댓글내용" path="comment_content"/>
+                			<form:textarea type="text" id="floatingContent" class="from-control" placeholder="댓글내용" path="comment_content"/>
+                			<script>
+								cmaTextareaSize('floatingContent', 200);
+							</script>
                 		</div>
-                		<script>
-							cmaTextareaSize('floatingContent', 200);
-						</script>
                 		<div class="col my-auto"><form:errors path="comment_content" id="error_message" /></div>
                 	</div>
                 	
@@ -105,8 +114,8 @@
 						<div class="col"></div>
 						<div class="col"></div>
 						<div class="col">
-							<a href="./mainPage" class="btn btn-dark" style="float: right;">작성취소</a>
-							<input type="submit" class="btn btn-dark" style="float: right;" value="작성">
+							<a href="./mainPage" class="btn btn-outline-primary" style="float: right;">작성취소</a>
+							<button type="button" class="btn btn-outline-primary" style="float: right" onclick="writeCommentButton(${data.boardVo.board_no})">작성</button>
 						</div>
 					</div>			
                 </form:form>

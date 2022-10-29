@@ -163,9 +163,6 @@ public class BoardService {
 	}
 
 	public void deleteContentPage(int board_no) {
-		/* 게시글 삭제 */
-		boardSQLMapper.deleteContentPage(board_no);
-
 		/* 게시글 댓글 삭제 */
 		commentSQLMapper.deleteAllComment(board_no);
 
@@ -174,6 +171,9 @@ public class BoardService {
 
 		/* 게시글 첨부파일 삭제 */
 		boardSQLMapper.deleteAllFile(board_no);
+		
+		/* 게시글 삭제 */
+		boardSQLMapper.deleteContentPage(board_no);
 
 	}
 

@@ -51,7 +51,7 @@
                 		<div class="row mt-3">
                 			<div class="col">
                 				<select name ="category" class="form-select">
-                					<option value="title">타이틀</option>
+                					<option value="title">제목</option>
                 					<option value="content">내용</option>
                 					<option value="nick">닉네임</option>
                 				</select>

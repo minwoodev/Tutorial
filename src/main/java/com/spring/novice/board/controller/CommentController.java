@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.spring.novice.board.service.BoardService;
@@ -30,7 +31,7 @@ public class CommentController {
 	@Autowired
 	CommentService commentService;
 
-	@RequestMapping("wirteCommentContentPage")
+	@RequestMapping(value = "wirteCommentContentPage", method = RequestMethod.POST)
 	public String wirteCommentContentPage(int board_no, @ModelAttribute("commentVo") CommentVo comment, Model model) {
 
 		HashMap<String, Object> data = boardService.getBoard(board_no);
@@ -53,11 +54,13 @@ public class CommentController {
 
 		commentService.insertComment(param);
 
+		System.out.println("댓글 작성 프로세스 실행");
+		
 		return "redirect:./readContentPage?board_no=" + param.getBoard_no();
 	}
-	
-	@RequestMapping("updateCommentContentPage")
-	public String updateCommentContentPage(@ModelAttribute("commentVo") CommentVo param, int comment_no, Model model) {
+
+	@RequestMapping(value = "updateCommentContentPage", method = RequestMethod.POST)
+	public String updateCommentContentPage(int comment_no, Model model, @ModelAttribute("commentVo") CommentVo param) {
 
 		HashMap<String, Object> data = commentService.getComment(comment_no);
 
@@ -72,22 +75,26 @@ public class CommentController {
 		if (result.hasErrors()) {
 			return "board/updateCommentContentPage";
 		}
-		
+
 		commentService.updateComment(param);
-		
+
 		return "redirect:./readContentPage??board_no=" + param.getBoard_no();
 	}
-	
-	@RequestMapping("deleteCommentContentProcess")
-	public String deleteCommentContentProcess(int comment_no, int board_no) {
-		
-		commentService.deleteComment(comment_no);
-		
-		return "redirect:./readContentPage??board_no=" + board_no;
+
+	@RequestMapping(value = "deleteCommentContentProcess", method = RequestMethod.POST)
+	public String deleteCommentContentProcess(CommentVo param) {
+
+		commentService.deleteComment(param.getComment_no());
+
+		System.out.println("comment_no : " + param.getComment_no());
+		System.out.println("board_no : " + param.getBoard_no());
+
+		return "redirect:./readContentPage?board_no=" + param.getBoard_no();
 	}
-	
+
 	@RequestMapping("commentLikeProcess")
-	public String commentLikeProcess(@RequestParam(value="board_no", defaultValue = "1") int board_no, CommentLikeVo param, HttpSession session) {
+	public String commentLikeProcess(@RequestParam(value = "board_no", defaultValue = "1") int board_no,
+			CommentLikeVo param, HttpSession session) {
 
 		// 행위자 정보는 세션에서 꼭 뽑아오자...
 		UserVo sessionUser = (UserVo) session.getAttribute("sessionUser");
